@@ -15,12 +15,13 @@ class TicketForm(forms.ModelForm):
 
     class Meta:
         model = Ticket
-        fields= ('name', 'content', 'location')
+        fields= ('name', 'content', 'location', 'urgency')
 
     def is_valid(self):
 
         self.data._mutable = True
         self.data['location'] = ObjectId(self.data['location'])
+        self.data['urgency'] = ObjectId(self.data['urgency'])
         valid = super(TicketForm, self).is_valid()
         
         return valid
