@@ -62,15 +62,15 @@
           {% csrf_token %}
           
           {% include 'partials/form_error_field.html' with errors=form.name.errors %} 
-          <label for="id_name">Nombre:</label>
+          <label for="id_name">Nombre:<span style="color:red"> *</span></label>
           {{ form.name }}
 
           {% include 'partials/form_error_field.html' with errors=form.content.errors %} 
-          <label for="id_content">Contenido:</label>
+          <label for="id_content">Contenido:<span style="color:red"> *</span></label>
           {{ form.content }}
 
           {% include 'partials/form_error_field.html' with errors=form.location.errors %} 
-          <label for="id_location">Ubicacion:</label>
+          <label for="id_location">Ubicacion:<span style="color:red"> *</span></label>
           {{ form.location }}
 
           <!-- DROP DOWN DE OPCIONES
