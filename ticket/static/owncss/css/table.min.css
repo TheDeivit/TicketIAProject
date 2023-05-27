@@ -15,3 +15,7 @@
   text-overflow: ellipsis;
   position: absolute;
 }
+
+.row-high-urgency {
+  background-color: red;
+}

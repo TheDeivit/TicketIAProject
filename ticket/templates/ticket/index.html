@@ -9,6 +9,8 @@
         <th class="icon-column">DESCRIPCION</th>
         <th class="icon-column">UBICACION</th>
         <th class="icon-column">URGENCIA</th>
+        <th class="icon-column">ESTADO</th>
+        <th class="icon-column">FECHA DE CREACION</th>
         <th class="icon-column">ACTUALIZAR</th>
         <th class="icon-column">ELIMINAR</th>
     </tr>
@@ -18,6 +20,8 @@
         <td class="text-column">{{ t.content }}</td>
         <td class="text-column">{{ t.location }}</td>
         <td class="text-column">{{ t.urgency }}</td>
+        <td class="text-column">{{ t.status }}</td>
+        <td class="text-column">{{ t.created_at }}</td>
         <td class="icon-column"><button
             class="btn btn-outline-primary float-right" data-bs-toggle="modal" data-bs-target="#saveModal" data-bs-id="{{ t.pk }}" data-bs-name="{{ t.name }}">
             <i class="fa fa-edit"></i>
@@ -78,6 +82,10 @@
           {% include 'partials/form_error_field.html' with errors=form.urgency.errors %} 
           <label for="id_urgency">Urgencia:<span style="color:red"> *</span></label>
           {{ form.urgency }}
+
+          {% include 'partials/form_error_field.html' with errors=form.status.errors %} 
+          <label for="id_status">Estado:<span style="color:red"> *</span></label>
+          {{ form.status }}
 
           <!-- DROP DOWN DE OPCIONES
         <select>

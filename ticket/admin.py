@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Ticket, Location, Urgency
+from .models import Ticket, Location, Urgency, Status
 from .forms import TicketForm
 # Register your models here.
 
@@ -13,4 +13,8 @@ class AdminLocation(admin.ModelAdmin):
 
 @admin.register(Urgency)
 class AdminUrgency(admin.ModelAdmin):
+    pass
+
+@admin.register(Status)
+class AdminStatus(admin.ModelAdmin):
     pass

@@ -15,9 +15,6 @@ def index(request):
 
 def add(request):
     if request.method == 'POST':
-        #request.POST._mutable = True
-        #request.POST['location'] = ObjectId(request.POST['location'])
-        #print(request.POST['location'])
         
         form = TicketForm(request.POST)
         if form.is_valid():
@@ -33,7 +30,7 @@ def update(request, pk):
 
     if request.method == 'POST':
 
-        request.POST._mutable = True
+        #request.POST._mutable = True
         #request.POST['location'] = ObjectId(request.POST['location'])
         #print(request.POST['location'])
 
