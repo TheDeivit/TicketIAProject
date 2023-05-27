@@ -15,7 +15,7 @@ class TicketForm(forms.ModelForm):
 
     class Meta:
         model = Ticket
-        fields= ('name', 'content', 'location', 'urgency', 'status')
+        fields= ('name', 'content', 'location', 'urgency', 'status', 'category', 'subcategory')
 
     def is_valid(self):
 
@@ -23,6 +23,8 @@ class TicketForm(forms.ModelForm):
         self.data['location'] = ObjectId(self.data['location'])
         self.data['urgency'] = ObjectId(self.data['urgency'])
         self.data['status'] = ObjectId(self.data['status'])
+        self.data['category'] = ObjectId(self.data['category'])
+        self.data['subcategory'] = ObjectId(self.data['subcategory'])
 
         valid = super(TicketForm, self).is_valid()
         

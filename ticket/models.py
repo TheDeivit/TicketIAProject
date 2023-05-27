@@ -28,12 +28,21 @@ class Status(Base):
     class Meta:
         verbose_name_plural = "Status"
 
+class Category(Base):
+    class Meta:
+        verbose_name_plural = "Categories"
 
+class Subcategory(Base):
+    class Meta:
+        verbose_name_plural = "Subcategories"
 
 # Create your models here.
 class Ticket(Base):
+
     content = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
     location = models.ForeignKey(Location, on_delete=models.PROTECT)
     urgency = models.ForeignKey(Urgency, on_delete=models.PROTECT)
-    status = models.ForeignKey(Status, on_delete=models.PROTECT, default=ObjectId("6472217d988c9a90e9aadfea"))
+    status = models.ForeignKey(Status, on_delete=models.PROTECT)
+    category = models.ForeignKey(Category, on_delete=models.PROTECT)
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.PROTECT)
