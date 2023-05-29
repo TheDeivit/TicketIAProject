@@ -6,6 +6,8 @@ from bson.objectid import ObjectId
 
 from .models import Ticket
 from .forms import TicketForm
+
+
 # Create your views here.
 
 def index(request):
@@ -72,3 +74,4 @@ def jgetTicketId(request,pk):
         'name': ticket.name,
         'content': ticket.content
     })
+    

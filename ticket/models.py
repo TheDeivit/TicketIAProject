@@ -33,16 +33,20 @@ class Category(Base):
         verbose_name_plural = "Categories"
 
 class Subcategory(Base):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    
     class Meta:
         verbose_name_plural = "Subcategories"
 
 # Create your models here.
 class Ticket(Base):
-
     content = models.TextField()
     created_at = models.DateTimeField(default=timezone.now)
-    location = models.ForeignKey(Location, on_delete=models.PROTECT)
-    urgency = models.ForeignKey(Urgency, on_delete=models.PROTECT)
-    status = models.ForeignKey(Status, on_delete=models.PROTECT)
-    category = models.ForeignKey(Category, on_delete=models.PROTECT)
-    subcategory = models.ForeignKey(Subcategory, on_delete=models.PROTECT)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    urgency = models.ForeignKey(Urgency, on_delete=models.CASCADE)
+    status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name_plural = "Tickets"
