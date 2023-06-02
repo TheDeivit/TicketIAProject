@@ -218,5 +218,34 @@
       content.value = res.content
     })
   }
+
+  function updateSubcategories(categoryId) {
+    const subcategoryField = document.getElementById('id_subcategory');
+    
+    subcategoryField.innerHTML = '<option value="">---------</option>';
+  
+    if (categoryId === '') {
+      subcategoryField.disabled = true;
+      return;
+    }
+  
+    subcategoryField.disabled = false;
+  
+    fetch(`/ticket/get-subcategories/?category_id=${categoryId}`)
+      .then(response => response.json())
+      .then(subcategories => {
+        subcategories.forEach(subcategory => {
+          const option = document.createElement('option');
+          option.value = subcategory.id;
+          option.textContent = subcategory.name;
+          subcategoryField.appendChild(option);
+        });
+      });
+  }
+  
+  id_category.addEventListener('change', function() {
+    const categoryId = this.value;
+    updateSubcategories(categoryId);
+  });
 </script>
 {% endblock %}
