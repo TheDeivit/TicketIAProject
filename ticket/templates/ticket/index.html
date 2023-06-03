@@ -12,7 +12,6 @@
         <th class="icon-column">URGENCIA</th>
         <th class="icon-column">ESTADO</th>
         <th class="icon-column">CATEGORIA</th>
-        <th class="icon-column">SUBCATEGORIA</th>
         <th class="icon-column">CREADO</th>
         <th class="icon-column">ACTUALIZAR</th>
         <th class="icon-column">ELIMINAR</th>
@@ -26,7 +25,6 @@
         <td class="text-column">{{ t.urgency }}</td>
         <td class="text-column">{{ t.status }}</td>
         <td class="text-column">{{ t.category }}</td>
-        <td class="text-column">{{ t.subcategory }}</td>
         <td class="text-column">{{ t.created_at }}</td>
         <td class="icon-column"><button
             class="btn btn-outline-primary float-right" data-bs-toggle="modal" data-bs-target="#saveModal" data-bs-id="{{ t.pk }}" data-bs-name="{{ t.name }}">
@@ -73,14 +71,6 @@
 
           {% csrf_token %}
           
-          {% include 'partials/form_error_field.html' with errors=form.name.errors %} 
-          <label for="id_name">Nombre:<span style="color:red"> *</span></label>
-          {{ form.name }}
-
-          {% include 'partials/form_error_field.html' with errors=form.content.errors %} 
-          <label for="id_content">Contenido:<span style="color:red"> *</span></label>
-          {{ form.content }}
-
           {% include 'partials/form_error_field.html' with errors=form.location.errors %} 
           <label for="id_location">Ubicacion:<span style="color:red"> *</span></label>
           {{ form.location }}
@@ -89,17 +79,21 @@
           <label for="id_urgency">Urgencia:<span style="color:red"> *</span></label>
           {{ form.urgency }}
 
-          {% include 'partials/form_error_field.html' with errors=form.status.errors %} 
-          <label for="id_status">Estado:<span style="color:red"> *</span></label>
-          {{ form.status }}
-
           {% include 'partials/form_error_field.html' with errors=form.category.errors %} 
           <label for="id_category">Categoria:<span style="color:red"> *</span></label>
           {{ form.category }}
 
-          {% include 'partials/form_error_field.html' with errors=form.subcategory.errors %} 
-          <label for="id_subcategory">Subcategoria:<span style="color:red"> *</span></label>
-          {{ form.subcategory }}
+          {% include 'partials/form_error_field.html' with errors=form.status.errors %} 
+          <label for="id_status">Estado:<span style="color:red"> *</span></label>
+          {{ form.status }}
+          
+          {% include 'partials/form_error_field.html' with errors=form.name.errors %} 
+          <label for="id_name">Nombre:<span style="color:red"> *</span></label>
+          {{ form.name }}
+
+          {% include 'partials/form_error_field.html' with errors=form.content.errors %} 
+          <label for="id_content">Contenido:<span style="color:red"> *</span></label>
+          {{ form.content }}
 
       </div>
         <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" class title="Cancelar"><i class="fa fa-cancel"></i></button>
@@ -219,33 +213,5 @@
     })
   }
 
-  function updateSubcategories(categoryId) {
-    const subcategoryField = document.getElementById('id_subcategory');
-    
-    subcategoryField.innerHTML = '<option value="">---------</option>';
-  
-    if (categoryId === '') {
-      subcategoryField.disabled = true;
-      return;
-    }
-  
-    subcategoryField.disabled = false;
-  
-    fetch(`/ticket/get-subcategories/?category_id=${categoryId}`)
-      .then(response => response.json())
-      .then(subcategories => {
-        subcategories.forEach(subcategory => {
-          const option = document.createElement('option');
-          option.value = subcategory.id;
-          option.textContent = subcategory.name;
-          subcategoryField.appendChild(option);
-        });
-      });
-  }
-  
-  id_category.addEventListener('change', function() {
-    const categoryId = this.value;
-    updateSubcategories(categoryId);
-  });
 </script>
 {% endblock %}

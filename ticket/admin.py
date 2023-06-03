@@ -1,16 +1,11 @@
 from django.contrib import admin
-from .models import Ticket, Location, Urgency, Status, Category, Subcategory
-from .forms import TicketForm, SubcategoryForm
+from .models import Ticket, Location, Urgency, Status, Category
+from .forms import TicketForm
 # Register your models here.
 
 @admin.register(Ticket)
 class AdminTicket(admin.ModelAdmin):
     form = TicketForm
-
-@admin.register(Subcategory)
-class AdminSubcategory(admin.ModelAdmin):
-    form = SubcategoryForm
-    list_display = ('name', 'category')
 
 @admin.register(Location)
 class AdminLocation(admin.ModelAdmin):

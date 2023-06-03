@@ -4,7 +4,7 @@ from django.http import JsonResponse
 
 from bson.objectid import ObjectId
 
-from .models import Ticket, Subcategory
+from .models import Ticket
 from .forms import TicketForm
 from bson import ObjectId
 
@@ -75,19 +75,3 @@ def jgetTicketId(request,pk):
         'name': ticket.name,
         'content': ticket.content
     })
-
-def get_subcategories(request):
-    category_id = request.GET.get('category_id')
-    category_object_id = ObjectId(category_id)
-    
-    subcategories = Subcategory.objects.filter(category=category_object_id).values('_id', 'name')
-    
-    subcategories_list = []
-    for subcategory in subcategories:
-        subcategory_dict = {
-            '_id': str(subcategory['_id']),
-            'name': subcategory['name']
-        }
-        subcategories_list.append(subcategory_dict)
-    
-    return JsonResponse(subcategories_list, safe=False)
