@@ -1,0 +1,19 @@
+{% extends 'base.html' %} 
+{% load static %}
+
+{% block content %}
+
+<div class="button-container my-2">
+  <button id="miBoton" class="btn btn-primary">Iniciar sesión</button>
+</div>
+
+<div class="image-container">
+    <img src="{% static 'img/TICKETIA2.png' %}" alt="LandImg">
+</div>
+
+<script>
+    document.getElementById('miBoton').addEventListener('click', function() {
+      window.location.href = 'login';
+    });
+</script>
+{% endblock %}
