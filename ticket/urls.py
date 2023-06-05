@@ -1,7 +1,9 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
 from . import views
 from django.contrib.auth.decorators import login_required
+from django.contrib import admin
+from .views import admin_logout
 
 app_name='ticket' 
 
@@ -18,5 +20,15 @@ urlpatterns = [
     #Ruta para la vista inicial
     path('', views.landingpage, name='landing'),
     path('create_ticket', login_required(views.create_ticket), name='create_ticket'),
+    path('logout/', views.logout_view, name='logout'),
 ]
 
+admin_urlpatterns = [
+    # Otras URLs del admin
+    path('logout/', admin_logout, name='admin_logout'),
+]
+
+urlpatterns += [
+    path('admin/', admin.site.urls),
+    path('admin/', include(admin_urlpatterns)),
+]
