@@ -85,8 +85,6 @@ def logout_view(request):
     logout(request)
     return redirect('/')  # Cambia 'login' por la URL a la que deseas redirigir después del cierre de sesión
 
-def admin_logout(request):
-    return redirect('/')
 #PRIVATE
 
 def _listTicket(request, form):
