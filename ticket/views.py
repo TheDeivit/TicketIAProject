@@ -7,11 +7,12 @@ from bson.objectid import ObjectId
 from .models import Ticket
 from .forms import TicketForm
 from bson import ObjectId
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 
 # Create your views here.
-
+@login_required(login_url='login')
 def index(request):
     return _listTicket(request, TicketForm())
 
@@ -64,7 +65,7 @@ def custom_login(request):
                 # El usuario pertenece al grupo "Solicitantes"
                 # Realiza las acciones correspondientes para los solicitantes
                 return redirect('ticket:create_ticket')
-            if user.groups.filter(name='Tecnicos').exists():
+            elif user.groups.filter(name='Tecnicos').exists():
                 print('Es tecnico')
                 # El usuario pertenece al grupo "Solicitantes"
                 # Realiza las acciones correspondientes para los solicitantes
@@ -79,7 +80,7 @@ def custom_login(request):
             return render(request, 'ticket/login.html', {'error': 'Credenciales inválidas'})
     else:
         return render(request, 'ticket/login.html')
-    
+
 #PRIVATE
 
 def _listTicket(request, form):
