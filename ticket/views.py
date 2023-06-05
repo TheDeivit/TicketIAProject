@@ -8,10 +8,12 @@ from .models import Ticket
 from .forms import TicketForm
 from bson import ObjectId
 from django.contrib.auth import authenticate, login
+from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
-
+@login_required
 def index(request):
     return _listTicket(request, TicketForm())
 
@@ -69,7 +71,7 @@ def custom_login(request):
                 print('Es admin')
                 # El usuario no pertenece al grupo "Solicitantes"
                 # Realiza otras acciones para usuarios que no sean solicitantes
-                return redirect('/admin')
+                return redirect('ticket:index')
         else:
             # Autenticación fallida
             return render(request, 'ticket/login.html', {'error': 'Credenciales inválidas'})
@@ -90,6 +92,7 @@ def _listTicket(request, form):
 def landingpage(request):
     return render(request,'ticket/landingpage.html')
 
+@login_required
 def create_ticket(request):
     form = TicketForm()  # Crear una instancia del formulario
     return render(request, 'ticket/create_ticket.html', {'form': form})
