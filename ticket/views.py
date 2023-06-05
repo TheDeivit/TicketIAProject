@@ -89,7 +89,7 @@ def logout_view(request):
 
 def _listTicket(request, form):
     tickets = Ticket.objects.order_by('created_at')
-    paginator = Paginator(tickets, 7)
+    paginator = Paginator(tickets, 4)
     
     page_number = request.GET.get('page')
     tickets_page = paginator.get_page(page_number)
