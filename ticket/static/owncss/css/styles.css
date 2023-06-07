@@ -77,3 +77,10 @@
   right: 10px;
     }
 
+.truncate-text {
+    display: inline-block;
+    max-width: 80px; /* Número de caracteres antes de truncar */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }

@@ -24,8 +24,8 @@
     {% for t in tickets %}
     <tr>
         <td class="text-column">{{ t.pk }}</td>
-        <td class="text-column">{{ t.name }}</td>
-        <td class="text-column">{{ t.content }}</td>
+        <td class="text-column"><span class="truncate-text">{{ t.name }}</span></td>
+        <td class="text-column"><span class="truncate-text">{{ t.content }}</span></td>
         <td class="text-column">{{ t.location }}</td>
         <td class="text-column">{{ t.urgency }}</td>
         <td class="text-column">{{ t.status }}</td>
