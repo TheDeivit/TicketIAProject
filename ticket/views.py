@@ -8,11 +8,16 @@ from .models import Ticket
 from .forms import TicketForm
 from bson import ObjectId
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
 
 
 # Create your views here.
-@login_required(login_url='login')
+def is_tecnico(user):
+    return user.groups.filter(name='Tecnicos').exists()
+
+
+@user_passes_test(is_tecnico, login_url='ticket:create_ticket')
+
 def index(request):
     return _listTicket(request, TicketForm())
 
@@ -86,6 +91,8 @@ def logout_view(request):
     return redirect('/')  # Cambia 'login' por la URL a la que deseas redirigir después del cierre de sesión
 
 #PRIVATE
+def is_solicitante(user):
+    return user.groups.filter(name='Solicitantes').exists()
 
 def _listTicket(request, form):
     tickets = Ticket.objects.order_by('created_at')
@@ -99,6 +106,7 @@ def _listTicket(request, form):
 def landingpage(request):
     return render(request,'ticket/landingpage.html')
 
+@user_passes_test(is_solicitante, login_url='ticket:index')
 def create_ticket(request):
     form = TicketForm()  # Crear una instancia del formulario
     return render(request, 'ticket/create_ticket.html', {'form': form})

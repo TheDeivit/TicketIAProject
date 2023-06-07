@@ -14,7 +14,7 @@ urlpatterns = [
     # Ruta para la vista de inicio de sesión personalizada
     path('login', views.custom_login, name='login'),
     # Ruta para la vista de cierre de sesión
-    path('logout', auth_views.LogoutView.as_view(), name='logout'),
+    path('logout/', auth_views.LogoutView.as_view(next_page='/'), name='logout'),
     #Ruta para la vista inicial
     path('', views.custom_login, name='login'),
     path('create_ticket', login_required(views.create_ticket), name='create_ticket'),
