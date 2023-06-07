@@ -16,7 +16,7 @@ urlpatterns = [
     # Ruta para la vista de cierre de sesión
     path('logout', auth_views.LogoutView.as_view(), name='logout'),
     #Ruta para la vista inicial
-    path('', views.landingpage, name='landing'),
+    path('', views.custom_login, name='login'),
     path('create_ticket', login_required(views.create_ticket), name='create_ticket'),
     path('logout/', views.logout_view, name='logout'),
 ]

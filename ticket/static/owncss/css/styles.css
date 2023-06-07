@@ -18,10 +18,21 @@
 }
 
 .image-container {
+  flex: 2;
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.image-container2 {
   display: flex;
   align-items: center;
   justify-content: center;
   height: 80vh;
+}
+
+.image-container2 img {
+  max-width: 80%;
+  max-height: 80%;
 }
 
 .image-container img {
@@ -34,21 +45,21 @@
 }
 
 .login-container {
-  
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
-  
+
+.form-container {
+  flex: 1;
+}
+
 .login-form {
   background-color: #f5f5f5;
   border: 1px solid #ccc;
   border-radius: 5px;
   padding: 20px;
-  width: 300px; /* Ajusta el ancho según tu preferencia */
-  margin: 0 auto; /* Centra horizontalmente */
   max-width: 300px;
   width: 100%;
 }

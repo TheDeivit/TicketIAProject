@@ -216,6 +216,11 @@
       content.value = res.content
     })
   }
+  
+  window.addEventListener('beforeunload', function() {
+    // Realizar una solicitud al servidor para cerrar la sesión
+    fetch('/logout/', { method: 'POST', credentials: 'include' });
+  });
 
 </script>
 {% endblock %}
