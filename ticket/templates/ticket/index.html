@@ -1,12 +1,13 @@
 {% extends 'base.html' %} {% block content %}
 {% load static %}
 
-<button onclick="cleanForm()" class="btn btn-success my-2" data-bs-toggle="modal" data-bs-target="#saveModal"><i class="fa fa-plus"></i> Crear</button>
-<a class="btn btn-danger my-2 logout-button" href="{% url 'ticket:logout' %}">
-  <i class="fa fa-right-from-bracket"></i> Cerrar sesión
-</a>
-
-<div class="container mt-3">
+<div class="d-flex justify-content-end">
+  <a class="btn btn-danger my-3" href="{% url 'ticket:logout' %}">
+    <i class="fa fa-right-from-bracket"></i> Cerrar sesión
+  </a>
+</div>
+<div class="container mt-2">
+  
   <table class="table table-hover">
     <tr>
         <th class="icon-column">FOLIO</th>
