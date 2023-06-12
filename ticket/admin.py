@@ -1,7 +1,11 @@
 from django.contrib import admin
 from .models import Ticket, Location, Urgency, Status, Category
 from .forms import TicketForm
+from django.contrib.admin import AdminSite
+
 # Register your models here.
+admin.site.site_header = 'Ticket IA Administration'
+admin.site.site_title = 'Ticket IA Admin Site'
 
 @admin.register(Ticket)
 class AdminTicket(admin.ModelAdmin):
