@@ -76,10 +76,7 @@ def custom_login(request):
                 # Realiza las acciones correspondientes para los solicitantes
                 return redirect('ticket:index')
             else:
-                print('Es admin')
-                # El usuario no pertenece al grupo "Solicitantes"
-                # Realiza otras acciones para usuarios que no sean solicitantes
-                return redirect('admin:index')
+                return render(request, 'ticket/login.html')
         else:
             # Autenticación fallida
             return render(request, 'ticket/login.html', {'error': 'Credenciales inválidas'})
