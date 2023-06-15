@@ -58,10 +58,17 @@
           <label for="id_category">Categoria:<span style="color:red"> *</span></label>
           {{ form.category }}
 
-          {% include 'partials/form_error_field.html' with errors=form.status.errors %} 
-          <label for="id_status">Estado:<span style="color:red"> *</span></label>
-          {{ form.status }}
-          
+          {% include 'partials/form_error_field.html' with errors=form.status.errors %}
+          <select name="status" id="id_status" class="form-select" required>
+            <option value="6486923080d437f211d3ab0c" selected>6486923080d437f211d3ab0c</option>
+          </select>
+          <script>
+            // Ocultar el campo de selección para que parezca un campo de texto estático
+            var statusField = document.getElementById("id_status");
+            statusField.style.display = "none";
+          </script>
+
+
           {% include 'partials/form_error_field.html' with errors=form.name.errors %} 
           <label for="id_name">Nombre:<span style="color:red"> *</span></label>
           {{ form.name }}
