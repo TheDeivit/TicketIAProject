@@ -3,6 +3,10 @@
 
 <button onclick="cleanForm()" class="btn btn-success my-2" data-bs-toggle="modal" data-bs-target="#saveModal"><i class="fa fa-plus"></i> Crear</button>
 <button class="btn btn-secondary my-2"><i class="fa fa-list"></i> Mis Tickets</button>
+{% comment %} <a class="btn btn-secondary my-2 " href="{% url 'ticket:user_index' %}">
+  <i class="fa fa-list"></i> Mis Tickets
+</a> {% endcomment %}
+
 <a class="btn btn-danger my-2 logout-button" href="{% url 'ticket:logout' %}">
   <i class="fa fa-right-from-bracket"></i> Cerrar sesión
 </a>

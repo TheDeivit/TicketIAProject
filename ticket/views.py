@@ -17,10 +17,11 @@ def is_tecnico(user):
 
 
 @user_passes_test(is_tecnico, login_url='ticket:create_ticket')
-
 def index(request):
     return _listTicket(request, TicketForm())
 
+#def user_index(request):
+#    return _listTicket(request, TicketForm())
 
 def add(request):
     if request.method == 'POST':
@@ -72,6 +73,7 @@ def custom_login(request):
                 return redirect('ticket:create_ticket')
             elif user.groups.filter(name='Tecnicos').exists():
                 print('Es tecnico')
+                print(username)
                 # El usuario pertenece al grupo "Solicitantes"
                 # Realiza las acciones correspondientes para los solicitantes
                 return redirect('ticket:index')
@@ -87,13 +89,18 @@ def logout_view(request):
     logout(request)
     return redirect('/')  # Cambia 'login' por la URL a la que deseas redirigir después del cierre de sesión
 
+@user_passes_test(is_tecnico, login_url='ticket:create_ticket')
+def ticket_details(request, pk):
+    ticket = Ticket.objects.get(pk=ObjectId(pk))
+    return render(request, 'ticket/ticket_details.html', {'ticket': ticket})
+
 #PRIVATE
 def is_solicitante(user):
     return user.groups.filter(name='Solicitantes').exists()
 
 def _listTicket(request, form):
     tickets = Ticket.objects.order_by('created_at')
-    paginator = Paginator(tickets, 4)
+    paginator = Paginator(tickets, 6)
     
     page_number = request.GET.get('page')
     tickets_page = paginator.get_page(page_number)

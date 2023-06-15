@@ -19,4 +19,7 @@ urlpatterns = [
     path('', views.custom_login, name='login'),
     path('create_ticket', login_required(views.create_ticket), name='create_ticket'),
     path('logout/', views.logout_view, name='logout'),
+    path('ticket/details/<str:pk>', views.ticket_details, name='ticket_details'),
+    #path('ticket/user_index', views.user_index, name='user_index'),
+
 ]

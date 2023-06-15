@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container">
+    <h2 class="text-center mt-4">Detalles del Ticket</h2>
+    <hr>
+
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card bg-light">
+          <div class="card-body">
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                    <th scope="row" class="text-default">Folio:</th>
+                    <td>{{ ticket.pk }}</td>
+                  </tr>
+                <tr>
+                  <th scope="row" class="text-default">Nombre:</th>
+                  <td>{{ ticket.name }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Contenido:</th>
+                  <td>{{ ticket.content }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Ubicación:</th>
+                  <td>{{ ticket.location }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Urgencia:</th>
+                  <td>{{ ticket.urgency }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Categoría:</th>
+                  <td>{{ ticket.category }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Estado:</th>
+                  <td>{{ ticket.status }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Fecha:</th>
+                  <td>{{ ticket.created_at }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="text-center mt-4">
+                <a href="{% url 'ticket:index'  %}" class="btn btn-primary" >Actualizar</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="text-left mt-4">
+        <a href="{% url 'ticket:index'  %}" class="btn btn-warning"><i class="fa fa-hand-point-left"></i> Regresar</a>
+    </div>
+    
+  </div>
+{% endblock %}
