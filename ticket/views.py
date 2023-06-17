@@ -26,7 +26,7 @@ def index(request):
 def add(request):
     if request.method == 'POST':
         
-        form = TicketForm(request.POST)
+        form = TicketForm(request.POST)#, request.FILES
         if form.is_valid():
             form.save()
         else:

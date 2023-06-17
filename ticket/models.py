@@ -47,6 +47,8 @@ class Ticket(Base):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     deadline = models.DateField()
+    #evidence = models.FileField(upload_to='evidences/', blank=True, null=True)
+
     
     class Meta:
         verbose_name_plural = "Tickets"

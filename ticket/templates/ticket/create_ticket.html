@@ -66,6 +66,11 @@
           <label for="id_deadline">Fecha límite:<span style="color:red"> *</span></label>
           {{ form.deadline }}
 
+          {% comment %} <label for="id_evidence">Subir evidencias:</label>
+          {{ form.evidence }}
+          {% include 'partials/form_error_field.html' with errors=form.evidence.errors %} {% endcomment %}
+
+
           {% include 'partials/form_error_field.html' with errors=form.status.errors %}
           <select name="status" id="id_status" class="form-select" required>
             <option value="6486923080d437f211d3ab0c" selected>6486923080d437f211d3ab0c</option>

@@ -1,13 +1,15 @@
 from django import forms
 from .models import Ticket
 from bson.objectid import ObjectId
+from django.forms import FileField
 
 class TicketForm(forms.ModelForm):
     
     #DA ESTILO AL FORM
     def __init__(self, *args, **kwargs):
         super(TicketForm, self).__init__(*args, **kwargs)
-        
+        #evidence = forms.FileField(label='Subir evidencias', required=False)
+
         for f in iter(self.fields):
             self.fields[f].widget.attrs.update({
                 'class': 'form-control'
@@ -15,7 +17,7 @@ class TicketForm(forms.ModelForm):
 
     class Meta:
         model = Ticket
-        fields= ('name', 'content', 'location', 'urgency', 'status', 'category', 'department', 'deadline')
+        fields= ('name', 'content', 'location', 'urgency', 'status', 'category', 'department', 'deadline')#, 'evidence'
         widgets = {
             'deadline': forms.DateInput(attrs={'type': 'date'})
         }
