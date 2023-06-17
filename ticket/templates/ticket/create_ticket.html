@@ -58,6 +58,10 @@
           <label for="id_category">Categoria:<span style="color:red"> *</span></label>
           {{ form.category }}
 
+          {% include 'partials/form_error_field.html' with errors=form.department.errors %} 
+          <label for="id_department">Departamento:<span style="color:red"> *</span></label>
+          {{ form.department }}
+
           {% include 'partials/form_error_field.html' with errors=form.status.errors %}
           <select name="status" id="id_status" class="form-select" required>
             <option value="6486923080d437f211d3ab0c" selected>6486923080d437f211d3ab0c</option>

@@ -18,19 +18,24 @@ class Base(models.Model):
 
 class Location(Base):
     class Meta:
-        verbose_name_plural = "Locations"
+        verbose_name_plural = "Ubicaciones"
 
 class Urgency(Base):
     class Meta:
-        verbose_name_plural = "UrgencyLevels"
+        verbose_name_plural = "Nivel de Urgencia"
 
 class Status(Base):
     class Meta:
-        verbose_name_plural = "Status"
+        verbose_name_plural = "Estado"
 
 class Category(Base):
     class Meta:
-        verbose_name_plural = "Categories"
+        verbose_name_plural = "Categorias"
+
+class Department(Base):
+    class Meta:
+        verbose_name_plural = "Departamentos"
+
 
 # Create your models here.
 class Ticket(Base):
@@ -40,6 +45,7 @@ class Ticket(Base):
     urgency = models.ForeignKey(Urgency, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
-
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    
     class Meta:
         verbose_name_plural = "Tickets"
