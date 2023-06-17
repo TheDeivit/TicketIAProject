@@ -62,6 +62,10 @@
           <label for="id_department">Departamento:<span style="color:red"> *</span></label>
           {{ form.department }}
 
+          {% include 'partials/form_error_field.html' with errors=form.deadline.errors %} 
+          <label for="id_deadline">Fecha límite:<span style="color:red"> *</span></label>
+          {{ form.deadline }}
+
           {% include 'partials/form_error_field.html' with errors=form.status.errors %}
           <select name="status" id="id_status" class="form-select" required>
             <option value="6486923080d437f211d3ab0c" selected>6486923080d437f211d3ab0c</option>
@@ -199,5 +203,12 @@
     })
   }
 
+  $(document).ready(function() {
+    $('.datepicker').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true,
+      todayHighlight: true
+    });
+  });
 </script>
 {% endblock %}

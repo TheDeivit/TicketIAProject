@@ -46,6 +46,7 @@ class Ticket(Base):
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    deadline = models.DateField()
     
     class Meta:
         verbose_name_plural = "Tickets"

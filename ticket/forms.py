@@ -15,7 +15,10 @@ class TicketForm(forms.ModelForm):
 
     class Meta:
         model = Ticket
-        fields= ('name', 'content', 'location', 'urgency', 'status', 'category', 'department')
+        fields= ('name', 'content', 'location', 'urgency', 'status', 'category', 'department', 'deadline')
+        widgets = {
+            'deadline': forms.DateInput(attrs={'type': 'date'})
+        }
 
     def is_valid(self):
 

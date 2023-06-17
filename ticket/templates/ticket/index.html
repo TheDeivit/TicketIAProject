@@ -18,7 +18,8 @@
         <th class="icon-column">CATEGORIA</th>
         <th class="icon-column">DEPARTAMENTO</th>
         <th class="icon-column">ESTADO</th>
-        <th class="icon-column">FECHA</th>
+        <th class="icon-column">CREACION</th>
+        <th class="icon-column">LIMITE</th>
         <th class="icon-column">DETALLES</th>
         <th class="icon-column">ACTUALIZAR</th>
         {% comment %} <th class="icon-column">ELIMINAR</th> {% endcomment %}
@@ -34,6 +35,7 @@
         <td class="text-column"><span class="truncate-text">{{ t.department }}</td>
         <td class="text-column">{{ t.status }}</td>
         <td class="text-column"><span class="truncate-text">{{ t.created_at }}</td>
+          <td class="text-column"><span class="truncate-text">{{ t.deadline }}</td>
         <td class="icon-column">
           <a href="{% url 'ticket:ticket_details' t.pk %}" class="btn btn-outline-primary float-right" target="_blank">
             <i class="fa fa-eye"></i>
