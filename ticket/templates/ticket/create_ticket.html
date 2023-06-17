@@ -50,17 +50,18 @@
           <label for="id_location">Ubicacion:<span style="color:red"> *</span></label>
           {{ form.location }}
 
-          {% include 'partials/form_error_field.html' with errors=form.urgency.errors %} 
-          <label for="id_urgency">Urgencia:<span style="color:red"> *</span></label>
-          {{ form.urgency }}
+          {% include 'partials/form_error_field.html' with errors=form.department.errors %} 
+          <label for="id_department">Departamento:<span style="color:red"> *</span></label>
+          {{ form.department }}
 
           {% include 'partials/form_error_field.html' with errors=form.category.errors %} 
           <label for="id_category">Categoria:<span style="color:red"> *</span></label>
           {{ form.category }}
+          
+          {% include 'partials/form_error_field.html' with errors=form.urgency.errors %} 
+          <label for="id_urgency">Urgencia:<span style="color:red"> *</span></label>
+          {{ form.urgency }}
 
-          {% include 'partials/form_error_field.html' with errors=form.department.errors %} 
-          <label for="id_department">Departamento:<span style="color:red"> *</span></label>
-          {{ form.department }}
 
           {% include 'partials/form_error_field.html' with errors=form.deadline.errors %} 
           <label for="id_deadline">Fecha límite:<span style="color:red"> *</span></label>
