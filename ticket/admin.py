@@ -9,6 +9,7 @@ admin.site.site_title = 'Ticket IA Sitio Administrativo'
 
 @admin.register(Ticket)
 class AdminTicket(admin.ModelAdmin):
+    search_fields = ['name']
     form = TicketForm
 
 @admin.register(Location)
