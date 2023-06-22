@@ -8,17 +8,32 @@
   </a>
 </div>
 
+<div class="container-fluid mt-2">
+  <div class="d-flex justify-content-start">
+    <form class="mb-3" action="{% url 'ticket:index' %}" method="GET">
+      <div class="input-group">
+        <input type="text" class="form-control" name="search" placeholder="Buscar folio..." value="{{ request.GET.search }}">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% include 'partials/pagination.html' with page_obj=tickets %}
+
+
 <div class="container mt-2">
-  <div class="table-responsive">
-  <table class="table table-hover">
+  <div class="d-flex justify-content-center table-container">
+    <div class="table-responsive">
+      <table class="table table-hover">
     <tr>
         <th class="icon-column">FOLIO</th>
         <th class="icon-column">NOMBRE</th>
         <th class="icon-column">DESCRIPCION</th>
         <th class="icon-column">UBICACION</th>
-        <th class="icon-column">URGENCIA</th>
-        <th class="icon-column">CATEGORIA</th>
         <th class="icon-column">DEPARTAMENTO</th>
+        <th class="icon-column">CATEGORIA</th>
+        <th class="icon-column">URGENCIA</th>
         <th class="icon-column">ESTADO</th>
         <th class="icon-column">CREACION</th>
         <th class="icon-column">LIMITE</th>
@@ -28,14 +43,14 @@
     </tr>
     {% for t in tickets %}
     <tr>
-        <td class="text-column">{{ t.pk }}</td>
+        <td class="text-column"><span class="truncate-text">{{ t.pk }}</span></td>
         <td class="text-column"><span class="truncate-text">{{ t.name }}</span></td>
         <td class="text-column"><span class="truncate-text">{{ t.content }}</span></td>
-        <td class="text-column">{{ t.location }}</td>
-        <td class="text-column">{{ t.urgency }}</td>
-        <td class="text-column"><span class="truncate-text">{{ t.category }}</td>
+        <td class="text-column"><span class="truncate-text">{{ t.location }}</span></td>
         <td class="text-column"><span class="truncate-text">{{ t.department }}</td>
-        <td class="text-column">{{ t.status }}</td>
+        <td class="text-column"><span class="truncate-text">{{ t.category }}</td>
+        <td class="text-column"><span class="truncate-text">{{ t.urgency }}</span></td>
+        <td class="text-column"><span class="truncate-text">{{ t.status }}</span></td>
         <td class="text-column"><span class="truncate-text">{{ t.created_at }}</td>
         <td class="text-column"><span class="truncate-text">{{ t.deadline }}</td>
         <td class="icon-column">
@@ -55,6 +70,7 @@
     </tr>
     {% endfor %}
 </table>
+</div>
 </div>
 </div>
 
@@ -91,35 +107,35 @@
           {% csrf_token %}
           
           {% include 'partials/form_error_field.html' with errors=form.location.errors %} 
-          <label for="id_location">Ubicacion:<span style="color:red"> *</span></label>
+          <label for="id_location">Ubicacion:</label>
           {{ form.location }}
 
           {% include 'partials/form_error_field.html' with errors=form.department.errors %} 
-          <label for="id_department">Departamento:<span style="color:red"> *</span></label>
+          <label for="id_department">Departamento:</label>
           {{ form.department }}
 
-          {% include 'partials/form_error_field.html' with errors=form.urgency.errors %} 
-          <label for="id_urgency">Urgencia:<span style="color:red"> *</span></label>
-          {{ form.urgency }}
-
           {% include 'partials/form_error_field.html' with errors=form.category.errors %} 
-          <label for="id_category">Categoria:<span style="color:red"> *</span></label>
+          <label for="id_category">Categoria:</label>
           {{ form.category }}
+
+          {% include 'partials/form_error_field.html' with errors=form.urgency.errors %} 
+          <label for="id_urgency">Urgencia:</label>
+          {{ form.urgency }}
 
           {% include 'partials/form_error_field.html' with errors=form.status.errors %} 
           <label for="id_status">Estado:<span style="color:red"> *</span></label>
           {{ form.status }}
 
           {% include 'partials/form_error_field.html' with errors=form.deadline.errors %} 
-          <label for="id_deadline">Fecha límite:<span style="color:red"> *</span></label>
+          <label for="id_deadline">Fecha límite:</label>
           {{ form.deadline }}
           
           {% include 'partials/form_error_field.html' with errors=form.name.errors %} 
-          <label for="id_name">Nombre:<span style="color:red"> *</span></label>
+          <label for="id_name">Nombre:</label>
           {{ form.name }}
 
           {% include 'partials/form_error_field.html' with errors=form.content.errors %} 
-          <label for="id_content">Contenido:<span style="color:red"> *</span></label>
+          <label for="id_content">Contenido:</label>
           {{ form.content }}
 
           
@@ -160,7 +176,6 @@
   </div>
 </div> {% endcomment %}
 
-  {% include 'partials/pagination.html' with page_obj=tickets %}
 
 
 <script>

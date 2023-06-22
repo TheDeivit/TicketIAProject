@@ -1,15 +1,18 @@
 {% extends 'base.html' %} {% block content %}
 {% load static %}
 
+<div class="d-flex justify-content-end">
+  <a class="btn btn-danger my-2" href="{% url 'ticket:logout' %}">
+    <i class="fa fa-right-from-bracket"></i> Cerrar sesión
+  </a>
+</div>
 <button onclick="cleanForm()" class="btn btn-success my-2" data-bs-toggle="modal" data-bs-target="#saveModal"><i class="fa fa-plus"></i> Crear</button>
 <button class="btn btn-secondary my-2"><i class="fa fa-list"></i> Mis Tickets</button>
 {% comment %} <a class="btn btn-secondary my-2 " href="{% url 'ticket:user_index' %}">
   <i class="fa fa-list"></i> Mis Tickets
 </a> {% endcomment %}
 
-<a class="btn btn-danger my-2 logout-button" href="{% url 'ticket:logout' %}">
-  <i class="fa fa-right-from-bracket"></i> Cerrar sesión
-</a>
+
 
 <div class="image-container2">
     <img src="{% static 'img/gif.gif' %}" alt="LandImg">
@@ -77,6 +80,7 @@
             <option value="64913ce614091f0a6b17b1e4" selected>64913ce614091f0a6b17b1e4</option>
           </select>
           <script>
+            
             // Ocultar el campo de selección para que parezca un campo de texto estático
             var statusField = document.getElementById("id_status");
             statusField.style.display = "none";
@@ -84,11 +88,11 @@
 
 
           {% include 'partials/form_error_field.html' with errors=form.name.errors %} 
-          <label for="id_name">Nombre:<span style="color:red"> *</span></label>
+          <label for="id_name">Titulo:<span style="color:red"> *</span></label>
           {{ form.name }}
 
           {% include 'partials/form_error_field.html' with errors=form.content.errors %} 
-          <label for="id_content">Contenido:<span style="color:red"> *</span></label>
+          <label for="id_content">Descripcion:<span style="color:red"> *</span></label>
           {{ form.content }}
 
       </div>
