@@ -15,13 +15,16 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 def is_tecnico(user):
     return user.groups.filter(name='Tecnicos').exists()
 
+def is_solicitante(user):
+    return user.groups.filter(name='Solicitantes').exists()
 
 @user_passes_test(is_tecnico, login_url='ticket:create_ticket')
 def index(request):
     return _listTicket(request, TicketForm())
 
-#def user_index(request):
-#    return _listTicket(request, TicketForm())
+def mytickets(request):
+    return _listmyTickets(request, TicketForm())
+
 
 def add(request):
     if request.method == 'POST':
@@ -96,9 +99,13 @@ def ticket_details(request, pk):
     ticket = Ticket.objects.get(pk=ObjectId(pk))
     return render(request, 'ticket/ticket_details.html', {'ticket': ticket})
 
+@user_passes_test(is_solicitante, login_url='ticket:index')
+def myticket_details(request, pk):
+    ticket = Ticket.objects.get(pk=ObjectId(pk))
+    return render(request, 'ticket/myticket_details.html', {'ticket': ticket})
+
 #PRIVATE
-def is_solicitante(user):
-    return user.groups.filter(name='Solicitantes').exists()
+
 
 def _listTicket(request, form):
     tickets = Ticket.objects.order_by('created_at')
@@ -109,6 +116,14 @@ def _listTicket(request, form):
 
     return render(request, 'ticket/index.html', {'tickets':tickets_page, 'form': form})
 
+def _listmyTickets(request, form):
+    tickets = Ticket.objects.order_by('created_at')
+    paginator = Paginator(tickets, 6)
+    
+    page_number = request.GET.get('page')
+    tickets_page = paginator.get_page(page_number)
+
+    return render(request, 'ticket/mytickets.html', {'tickets':tickets_page, 'form': form})
 def landingpage(request):
     return render(request,'ticket/landingpage.html')
 

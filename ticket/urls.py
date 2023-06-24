@@ -20,6 +20,8 @@ urlpatterns = [
     path('create_ticket', login_required(views.create_ticket), name='create_ticket'),
     path('logout/', views.logout_view, name='logout'),
     path('ticket/details/<str:pk>', views.ticket_details, name='ticket_details'),
+    path('myticket/details/<str:pk>', views.myticket_details, name='myticket_details'),
+    path('ticket/mytickets', views.mytickets, name='mytickets'),
     #path('ticket/user_index', views.user_index, name='user_index'),
 
 ]

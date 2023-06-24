@@ -7,7 +7,9 @@
   </a>
 </div>
 <button onclick="cleanForm()" class="btn btn-success my-1" data-bs-toggle="modal" data-bs-target="#saveModal"><i class="fa fa-plus"></i> Crear</button>
-<button class="btn btn-secondary my-1"><i class="fa fa-list"></i> Mis Tickets</button>
+<a class="btn btn-secondary my-1" href="{% url 'ticket:mytickets' %}">
+  <i class="fa fa-list"></i> Mis Tickets
+</a>
 {% comment %} <a class="btn btn-secondary my-2 " href="{% url 'ticket:user_index' %}">
   <i class="fa fa-list"></i> Mis Tickets
 </a> {% endcomment %}
