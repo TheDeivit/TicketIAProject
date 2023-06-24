@@ -2,13 +2,15 @@
 {% block content %}
 {% load static %}
 
-<div class="text-end mt-4">
-  <a href="{% url 'ticket:create_ticket' %}" class="btn btn-warning"><i class="fa fa-hand-point-left"></i> Regresar</a>
+<div class="d-flex justify-content-end">
+  <a class="btn btn-danger my-3" href="{% url 'ticket:logout' %}">
+    <i class="fa fa-right-from-bracket"></i> Cerrar sesión
+  </a>
 </div>
 
 <div class="container-fluid mt-2">
   <div class="d-flex justify-content-start">
-    <form class="mb-3" action="{% url 'ticket:mytickets' %}" method="GET">
+    <form class="mb-3" action="{% url 'ticket:globaltickets' %}" method="GET">
       <div class="input-group">
         <input type="text" class="form-control" name="search" placeholder="Buscar folio..." value="{{ request.GET.search }}">
         <button type="submit" class="btn btn-primary">Buscar</button>
@@ -28,11 +30,11 @@
         <th class="icon-column"><div class="small">FOLIO</div></th>
         <th class="icon-column"><div class="small">TITULO</div></th>
         <th class="icon-column"><div class="small">DESCRIPCION</div></th>
-        {% comment %} <th class="icon-column"><div class="small">UBICACION</div></th>
-        <th class="icon-column"><div class="small">DEPARTAMENTO</div></th> {% endcomment %}
+        <th class="icon-column"><div class="small">UBICACION</div></th>
+        <th class="icon-column"><div class="small">DEPARTAMENTO</div></th>
         <th class="icon-column"><div class="small">CATEGORIA</div></th>
-        {% comment %} <th class="icon-column"><div class="small">USUARIO</div></th>
-        <th class="icon-column"><div class="small">URGENCIA</div></th> {% endcomment %}
+        <th class="icon-column"><div class="small">USUARIO</div></th>
+        <th class="icon-column"><div class="small">URGENCIA</div></th>
         <th class="icon-column"><div class="small">ESTADO</div></th>
         <th class="icon-column"><div class="small">CREACION</div></th>
         <th class="icon-column"><div class="small">LIMITE</div></th>
@@ -46,16 +48,16 @@
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.pk }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.name }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.content }}</span></div></td>
-        {% comment %} <td class="text-column"><div class="small"><span class="truncate-text">{{ t.location }}</span></div></td>
-        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.department }}</span></div></td> {% endcomment %}
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.location }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.department }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.category }}</span></div></td>
-        {% comment %} <td class="text-column"><div class="small"><span class="truncate-text">{{ t.username }}</span></div></td>
-        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.urgency }}</span></div></td> {% endcomment %}
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.username }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.urgency }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.status }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.created_at }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.deadline }}</span></div></td>
         <td class="icon-column">
-          <a href="{% url 'ticket:myticket_details' t.pk %}" class="btn btn-outline-primary float-right">
+          <a href="{% url 'ticket:globalticket_details' t.pk %}" class="btn btn-outline-primary float-right">
             <i class="fa fa-eye"></i>
           </a>
         </td>
@@ -98,11 +100,11 @@
       </div>
       <form id="saveForm" action="
       {% if form.instance.pk %}
-        {% url 'ticket:update' form.instance.pk %}
+        {% url 'ticket:updateglobal' form.instance.pk %}
       {% else %}
         {% url 'ticket:add' %}
       {% endif %}" 
-      add_action="{% url 'ticket:add' %}" update_action="{% url 'ticket:update' 0 %}" method="post">
+      add_action="{% url 'ticket:add' %}" update_action="{% url 'ticket:updateglobal' 0 %}" method="post">
         <div class="modal-body">
 
           {% csrf_token %}

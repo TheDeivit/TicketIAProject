@@ -18,6 +18,9 @@ def is_tecnico(user):
 def is_solicitante(user):
     return user.groups.filter(name='Solicitantes').exists()
 
+def is_helpdesk(user):
+    return user.groups.filter(name='Helpdesks').exists()
+
 @user_passes_test(is_tecnico, login_url='ticket:create_ticket')
 def index(request):
     return _listTicket(request, TicketForm())
@@ -25,6 +28,8 @@ def index(request):
 def mytickets(request):
     return _listmyTickets(request, TicketForm())
 
+def globaltickets(request):
+    return _listGlobalTickets(request, TicketForm())
 
 def add(request):
     if request.method == 'POST':
@@ -52,6 +57,20 @@ def update(request, pk):
             return _listTicket(request, form)
         
     return redirect('ticket:index')
+
+def updateGlobal(request, pk):
+
+    ticket = Ticket.objects.get(pk = ObjectId(pk))
+
+    if request.method == 'POST':
+
+        form = TicketForm(request.POST, instance=ticket)
+        if form.is_valid():
+            form.save()
+        else:
+            return _listGlobalTickets(request, form)
+        
+    return redirect('ticket:globaltickets')
 
 def delete(request,pk):
 
@@ -82,6 +101,12 @@ def custom_login(request):
                 # El usuario pertenece al grupo "Solicitantes"
                 # Realiza las acciones correspondientes para los solicitantes
                 return redirect('ticket:index')
+            elif user.groups.filter(name='Helpdesks').exists():
+                print('Es helpdesk')
+                print(username)
+                # El usuario pertenece al grupo "Solicitantes"
+                # Realiza las acciones correspondientes para los solicitantes
+                return redirect('ticket:globaltickets')
             else:
                 return render(request, 'ticket/login.html')
         else:
@@ -104,6 +129,9 @@ def myticket_details(request, pk):
     ticket = Ticket.objects.get(pk=ObjectId(pk))
     return render(request, 'ticket/myticket_details.html', {'ticket': ticket})
 
+def globalticket_details(request, pk):
+    ticket = Ticket.objects.get(pk=ObjectId(pk))
+    return render(request, 'ticket/globalticket_details.html', {'ticket': ticket})
 #PRIVATE
 
 
@@ -127,6 +155,15 @@ def _listmyTickets(request, form):
     tickets_page = paginator.get_page(page_number)
 
     return render(request, 'ticket/mytickets.html', {'tickets': tickets_page, 'form': form})
+
+def _listGlobalTickets(request, form):
+    tickets = Ticket.objects.order_by('created_at')
+    paginator = Paginator(tickets, 6)
+    
+    page_number = request.GET.get('page')
+    tickets_page = paginator.get_page(page_number)
+
+    return render(request, 'ticket/globaltickets.html', {'tickets':tickets_page, 'form': form})
 
 def landingpage(request):
     return render(request,'ticket/landingpage.html')
