@@ -79,18 +79,26 @@
 
 .truncate-text {
     display: inline-block;
-    max-width: 80px; /* Número de caracteres antes de truncar */
+    max-width: 120px; /* Número de caracteres antes de truncar */
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
 
-.table-container {
-  margin: 0;
-  padding: 0;
-}
+  .table-container {
+    margin-left: -80px;
+    margin-right: -80px;
+  }
   
-.table {
-  margin: 0;
-  padding: 0;
-}
+  .table-responsive {
+    overflow-x: auto;
+  }
+  
+  .table {
+    margin-bottom: 0;
+  }
+  
+  .container {
+    padding-left: 15px;
+    padding-right: 15px;
+  }

@@ -25,34 +25,35 @@
 <div class="container mt-2">
   <div class="d-flex justify-content-center table-container">
     <div class="table-responsive">
-      <table class="table table-hover">
+      <table class="table table-sm">
     <tr>
-        <th class="icon-column">FOLIO</th>
-        <th class="icon-column">NOMBRE</th>
-        <th class="icon-column">DESCRIPCION</th>
-        <th class="icon-column">UBICACION</th>
-        <th class="icon-column">DEPARTAMENTO</th>
-        <th class="icon-column">CATEGORIA</th>
-        <th class="icon-column">URGENCIA</th>
-        <th class="icon-column">ESTADO</th>
-        <th class="icon-column">CREACION</th>
-        <th class="icon-column">LIMITE</th>
-        <th class="icon-column">DETALLES</th>
-        <th class="icon-column">ACTUALIZAR</th>
-        {% comment %} <th class="icon-column">ELIMINAR</th> {% endcomment %}
+        <th class="icon-column"><div class="small">FOLIO</div></th>
+        <th class="icon-column"><div class="small">NOMBRE</div></th>
+        <th class="icon-column"><div class="small">DESCRIPCION</div></th>
+        <th class="icon-column"><div class="small">UBICACION</div></th>
+        <th class="icon-column"><div class="small">DEPARTAMENTO</div></th>
+        <th class="icon-column"><div class="small">CATEGORIA</div></th>
+        <th class="icon-column"><div class="small">URGENCIA</div></th>
+        <th class="icon-column"><div class="small">ESTADO</div></th>
+        <th class="icon-column"><div class="small">CREACION</div></th>
+        <th class="icon-column"><div class="small">LIMITE</div></th>
+        <th class="icon-column"><div class="small">DETALLES</div></th>
+        <th class="icon-column"><div class="small">ACTUALIZAR</div></th>
+        {% comment %} <th class="icon-column"><div class="small">ELIMINAR</div></th> {% endcomment %}
     </tr>
     {% for t in tickets %}
     <tr>
-        <td class="text-column"><span class="truncate-text">{{ t.pk }}</span></td>
-        <td class="text-column"><span class="truncate-text">{{ t.name }}</span></td>
-        <td class="text-column"><span class="truncate-text">{{ t.content }}</span></td>
-        <td class="text-column"><span class="truncate-text">{{ t.location }}</span></td>
-        <td class="text-column"><span class="truncate-text">{{ t.department }}</td>
-        <td class="text-column"><span class="truncate-text">{{ t.category }}</td>
-        <td class="text-column"><span class="truncate-text">{{ t.urgency }}</span></td>
-        <td class="text-column"><span class="truncate-text">{{ t.status }}</span></td>
-        <td class="text-column"><span class="truncate-text">{{ t.created_at }}</td>
-        <td class="text-column"><span class="truncate-text">{{ t.deadline }}</td>
+      
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.pk }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.name }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.content }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.location }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.department }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.category }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.urgency }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.status }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.created_at }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.deadline }}</span></div></td>
         <td class="icon-column">
           <a href="{% url 'ticket:ticket_details' t.pk %}" class="btn btn-outline-primary float-right">
             <i class="fa fa-eye"></i>

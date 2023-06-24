@@ -2,12 +2,12 @@
 {% load static %}
 
 <div class="d-flex justify-content-end">
-  <a class="btn btn-danger my-2" href="{% url 'ticket:logout' %}">
+  <a class="btn btn-danger my-1" href="{% url 'ticket:logout' %}">
     <i class="fa fa-right-from-bracket"></i> Cerrar sesión
   </a>
 </div>
-<button onclick="cleanForm()" class="btn btn-success my-2" data-bs-toggle="modal" data-bs-target="#saveModal"><i class="fa fa-plus"></i> Crear</button>
-<button class="btn btn-secondary my-2"><i class="fa fa-list"></i> Mis Tickets</button>
+<button onclick="cleanForm()" class="btn btn-success my-1" data-bs-toggle="modal" data-bs-target="#saveModal"><i class="fa fa-plus"></i> Crear</button>
+<button class="btn btn-secondary my-1"><i class="fa fa-list"></i> Mis Tickets</button>
 {% comment %} <a class="btn btn-secondary my-2 " href="{% url 'ticket:user_index' %}">
   <i class="fa fa-list"></i> Mis Tickets
 </a> {% endcomment %}
@@ -77,7 +77,7 @@
 
           {% include 'partials/form_error_field.html' with errors=form.status.errors %}
           <select name="status" id="id_status" class="form-select" required>
-            <option value="64913ce614091f0a6b17b1e4" selected>64913ce614091f0a6b17b1e4</option>
+            <option value="6496548c27f7733251b8baf0" selected>6496548c27f7733251b8baf0</option>
           </select>
           <script>
             

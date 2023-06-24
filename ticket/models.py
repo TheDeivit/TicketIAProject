@@ -22,11 +22,11 @@ class Location(Base):
 
 class Urgency(Base):
     class Meta:
-        verbose_name_plural = "Nivel de Urgencia"
+        verbose_name_plural = "Niveles de Urgencia"
 
 class Status(Base):
     class Meta:
-        verbose_name_plural = "Estado"
+        verbose_name_plural = "Estados"
 
 class Category(Base):
     class Meta:

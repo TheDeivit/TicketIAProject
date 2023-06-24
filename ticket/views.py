@@ -100,7 +100,7 @@ def is_solicitante(user):
 
 def _listTicket(request, form):
     tickets = Ticket.objects.order_by('created_at')
-    paginator = Paginator(tickets, 8)
+    paginator = Paginator(tickets, 6)
     
     page_number = request.GET.get('page')
     tickets_page = paginator.get_page(page_number)
