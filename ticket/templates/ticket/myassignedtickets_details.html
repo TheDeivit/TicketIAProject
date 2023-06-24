@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="container mb-3">
+    <h2 class="text-center mt-4">Detalles del Ticket</h2>
+    <hr>
+    <div class="text-left mt-4">
+      <a href="{% url 'ticket:mytickets'  %}" class="btn btn-warning"><i class="fa fa-hand-point-left"></i> Regresar</a>
+    </div>
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <div class="card bg-light">
+          <div class="card-body">
+            <table class="table table-striped">
+              <tbody>
+                <tr>
+                    <th scope="row" class="text-default">Folio:</th>
+                    <td>{{ ticket.pk }}</td>
+                  </tr>
+                <tr>
+                  <th scope="row" class="text-default">Título:</th>
+                  <td>{{ ticket.name }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Descripción:</th>
+                  <td>{{ ticket.content }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Ubicación:</th>
+                  <td>{{ ticket.location }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Departamento:</th>
+                  <td>{{ ticket.department }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Categoría:</th>
+                  <td>{{ ticket.category }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Usuario:</th>
+                  <td>{{ ticket.username }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Urgencia:</th>
+                  <td>{{ ticket.urgency }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Estado:</th>
+                  <td>{{ ticket.status }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Creación:</th>
+                  <td>{{ ticket.created_at }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Limite:</th>
+                  <td>{{ ticket.deadline }}</td>
+                </tr>
+                {% comment %} <tr>
+                  <th scope="row" class="text-default">Evidencia:</th>
+                  <td>{{ ticket.evidence }}</td>
+                </tr> {% endcomment %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+{% endblock %}

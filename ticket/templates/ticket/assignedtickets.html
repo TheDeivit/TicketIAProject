@@ -1,0 +1,284 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+
+<div class="d-flex justify-content-end">
+  <a class="btn btn-danger my-3" href="{% url 'ticket:logout' %}">
+    <i class="fa fa-right-from-bracket"></i> Cerrar sesión
+  </a>
+</div>
+
+<div class="container-fluid mt-2">
+  <div class="d-flex justify-content-start">
+    <form class="mb-3" action="{% url 'ticket:index' %}" method="GET">
+      <div class="input-group">
+        <input type="text" class="form-control" name="search" placeholder="Buscar folio..." value="{{ request.GET.search }}">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% include 'partials/pagination.html' with page_obj=tickets %}
+
+
+<div class="container mt-2">
+  <div class="d-flex justify-content-center table-container">
+    <div class="table-responsive">
+      <table class="table table-sm">
+    <tr>
+        <th class="icon-column"><div class="small">FOLIO</div></th>
+        <th class="icon-column"><div class="small">TITULO</div></th>
+        <th class="icon-column"><div class="small">DESCRIPCION</div></th>
+        <th class="icon-column"><div class="small">UBICACION</div></th>
+        <th class="icon-column"><div class="small">DEPARTAMENTO</div></th>
+        <th class="icon-column"><div class="small">CATEGORIA</div></th>
+        <th class="icon-column"><div class="small">USUARIO</div></th>
+        <th class="icon-column"><div class="small">URGENCIA</div></th>
+        <th class="icon-column"><div class="small">ESTADO</div></th>
+        <th class="icon-column"><div class="small">CREACION</div></th>
+        <th class="icon-column"><div class="small">LIMITE</div></th>
+        <th class="icon-column"><div class="small">DETALLES</div></th>
+        <th class="icon-column"><div class="small">ACTUALIZAR</div></th>
+        {% comment %} <th class="icon-column"><div class="small">ELIMINAR</div></th> {% endcomment %}
+    </tr>
+    {% for t in tickets %}
+    <tr>
+      
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.pk }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.name }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.content }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.location }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.department }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.category }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.username }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.urgency }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.status }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.created_at }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.deadline }}</span></div></td>
+        <td class="icon-column">
+          <a href="{% url 'ticket:ticket_details' t.pk %}" class="btn btn-outline-primary float-right">
+            <i class="fa fa-eye"></i>
+          </a>
+        </td>
+
+        <td class="icon-column"><button
+            class="btn btn-outline-primary float-right" data-bs-toggle="modal" data-bs-target="#saveModal" data-bs-id="{{ t.pk }}" data-bs-name="{{ t.name }}">
+            <i class="fa fa-edit"></i>
+          </button></td>
+        {% comment %} <td class="icon-column"><button
+            class="btn btn-outline-danger float-right" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-id="{{ t.pk }}" data-bs-name="{{ t.name }}">
+            <i class="fa fa-trash"></i>
+        </button></td> {% endcomment %}
+    </tr>
+    {% endfor %}
+</table>
+</div>
+</div>
+</div>
+
+<!-- CREAR O ACTUALIZAR TICKET -->
+
+<div class="modal fade" tabindex="-1" id="saveModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {% if form.instance.pk %}
+            Actualizar Ticket: {{ form.instance.name }}
+          {% else %}
+            Crear Ticket
+          {% endif %}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          title="Cerrar"
+        ></button>
+      </div>
+      <form id="saveForm" action="
+      {% if form.instance.pk %}
+        {% url 'ticket:update' form.instance.pk %}
+      {% else %}
+        {% url 'ticket:add' %}
+      {% endif %}" 
+      add_action="{% url 'ticket:add' %}" update_action="{% url 'ticket:update' 0 %}" method="post">
+        <div class="modal-body">
+
+          {% csrf_token %}
+          
+          {% include 'partials/form_error_field.html' with errors=form.location.errors %} 
+          <label for="id_location">Ubicacion:</label>
+          {{ form.location }}
+
+          {% include 'partials/form_error_field.html' with errors=form.department.errors %} 
+          <label for="id_department">Departamento:</label>
+          {{ form.department }}
+
+          {% include 'partials/form_error_field.html' with errors=form.category.errors %} 
+          <label for="id_category">Categoria:</label>
+          {{ form.category }}
+
+          {% include 'partials/form_error_field.html' with errors=form.urgency.errors %} 
+          <label for="id_urgency">Urgencia:</label>
+          {{ form.urgency }}
+
+          {% include 'partials/form_error_field.html' with errors=form.status.errors %}
+          <label for="id_status"><strong>Estado:</strong><span style="color:red"> *</span></label>
+          {{ form.status }}
+
+          {% include 'partials/form_error_field.html' with errors=form.deadline.errors %} 
+          <label for="id_deadline">Fecha límite:</label>
+          {{ form.deadline }}
+          
+          {% include 'partials/form_error_field.html' with errors=form.name.errors %} 
+          <label for="id_name">Nombre:</label>
+          {{ form.name }}
+
+          {% include 'partials/form_error_field.html' with errors=form.content.errors %} 
+          <label for="id_content">Contenido:</label>
+          {{ form.content }}
+
+          
+
+      </div>
+        <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" class title="Cancelar"><i class="fa fa-cancel"></i></button>
+          <button type="submit" class="btn btn-primary" title="Guardar"><i class="fa fa-save"></i></button>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- BORRAR LIBRO -->
+
+{% comment %} <div class="modal fade" tabindex="-1" id="deleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Borrar Ticket: <span></span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="deleteForm" action=""  delete_action="{% url 'ticket:delete' 0 %}" method="post">
+        <div class="modal-body">
+          
+          {% csrf_token %}
+
+          <p>¿Seguro que deseas borrar el Ticket seleccionado ?</p>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div> {% endcomment %}
+
+
+
+<script>
+  window.onload = function () {
+    saveTicket()
+    {% comment %} deleteTicket() {% endcomment %}
+  }
+
+  {% comment %} function deleteTicket(){
+    const deleteModal = document.getElementById("deleteModal")
+    const deleteForm = document.getElementById("deleteForm")
+
+    deleteModal.addEventListener("show.bs.modal", (event) => {
+    // Button that triggered the modal
+    const button = event.relatedTarget;
+    // Extract info from data-bs-* attributes
+    const id = button.getAttribute("data-bs-id");
+    const name = button.getAttribute("data-bs-name");
+
+    document.querySelector("#deleteModal .modal-title span").textContent = name
+    deleteForm.setAttribute("action",deleteForm.getAttribute("delete_action").slice(0, -1) + id)
+
+  })
+  } {% endcomment %}
+
+
+
+  function saveTicket(){
+    const saveModal = document.getElementById("saveModal")
+
+    if (document.querySelectorAll("#saveModal .text-danger").length > 0) {
+      const saveModali = new bootstrap.Modal(saveModal)
+      saveModali.show();
+    }
+
+    const saveForm = document.getElementById("saveForm")
+
+    saveModal.addEventListener("show.bs.modal", (event) => {
+    // Button that triggered the modal
+    const button = event.relatedTarget;
+    // Extract info from data-bs-* attributes
+    const id = button.getAttribute("data-bs-id");
+    const name = button.getAttribute("data-bs-name");
+
+    if (id == null) {
+      //add
+      saveForm.setAttribute("action", saveForm.getAttribute("add_action"))
+      document.querySelector("#saveModal .modal-title").textContent = "Crear Ticket"
+    } else {
+      //update
+      saveForm.setAttribute("action",saveForm.getAttribute("update_action").slice(0, -1) + id)
+      document.querySelector("#saveModal .modal-title").textContent = "Actualizar Ticket: " + name
+      getInfoTicket(id)
+    }
+  })
+}
+
+  function cleanForm()
+  {
+    const name = document.querySelector('#saveForm [name=name]')
+    name.value = ""
+    const content = document.querySelector('#saveForm [name=content]')
+    content.value = ""
+  }
+
+  function getInfoTicket(ticketId){
+
+    fetch('http://127.0.0.1:8000/ticket/j-get-ticket-by-id/' + ticketId)
+    .then(res => res.json())
+    .then(res => {
+      if(res == 'name')
+        return 
+
+      const name = document.querySelector('#saveForm [name=name]')
+      name.value = res.name
+
+      const content = document.querySelector('#saveForm [name=content]')
+      content.value = res.content
+
+      const location = document.querySelector('#saveForm [name=location] option[value="'+res.location_id+'"]').selected="selected"
+      location.value = res.location
+
+      const urgency = document.querySelector('#saveForm [name=urgency] option[value="'+res.urgency_id+'"]').selected="selected"
+      urgency.value = res.urgency
+
+      const status = document.querySelector('#saveForm [name=status] option[value="'+res.status_id+'"]').selected="selected"
+      status.value = res.status
+
+      const category = document.querySelector('#saveForm [name=category] option[value="'+res.category_id+'"]').selected="selected"
+      category.value = res.category
+
+      const department = document.querySelector('#saveForm [name=department] option[value="'+res.department_id+'"]').selected="selected"
+      department.value = res.department
+
+      const deadline = document.querySelector('#saveForm [name=deadline]')
+      deadline.value = res.deadline
+
+      
+    })
+  }
+
+</script>
+{% endblock %}
