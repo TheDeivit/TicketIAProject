@@ -1,11 +1,12 @@
 from djongo import models
 from django.utils import timezone
 from bson.objectid import ObjectId
+from django.contrib.auth.models import User
 
 class Base(models.Model):
     _id = models.ObjectIdField()
     name = models.CharField(max_length=255)
-
+    username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     @property
     def pk(self):
         return self._id

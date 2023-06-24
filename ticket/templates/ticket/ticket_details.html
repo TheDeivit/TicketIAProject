@@ -3,7 +3,9 @@
   <div class="container">
     <h2 class="text-center mt-4">Detalles del Ticket</h2>
     <hr>
-
+    <div class="text-left mt-4">
+      <a href="{% url 'ticket:index'  %}" class="btn btn-warning"><i class="fa fa-hand-point-left"></i> Regresar</a>
+    </div>
     <div class="row">
       <div class="col-md-6 offset-md-3">
         <div class="card bg-light">
@@ -15,11 +17,11 @@
                     <td>{{ ticket.pk }}</td>
                   </tr>
                 <tr>
-                  <th scope="row" class="text-default">Nombre:</th>
+                  <th scope="row" class="text-default">Título:</th>
                   <td>{{ ticket.name }}</td>
                 </tr>
                 <tr>
-                  <th scope="row" class="text-default">Contenido:</th>
+                  <th scope="row" class="text-default">Descripción:</th>
                   <td>{{ ticket.content }}</td>
                 </tr>
                 <tr>
@@ -33,6 +35,10 @@
                 <tr>
                   <th scope="row" class="text-default">Categoría:</th>
                   <td>{{ ticket.category }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Usuario:</th>
+                  <td>{{ ticket.username }}</td>
                 </tr>
                 <tr>
                   <th scope="row" class="text-default">Urgencia:</th>
@@ -57,9 +63,6 @@
               </tbody>
             </table>
           </div>
-        </div>
-        <div class="text-left mt-4">
-          <a href="{% url 'ticket:index'  %}" class="btn btn-warning"><i class="fa fa-hand-point-left"></i> Regresar</a>
         </div>
       </div>
     </div>

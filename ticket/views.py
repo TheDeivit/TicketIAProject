@@ -28,6 +28,8 @@ def add(request):
         
         form = TicketForm(request.POST)#, request.FILES
         if form.is_valid():
+            form = form.save(commit=False)
+            form.username = request.user
             form.save()
         else:
             return _listTicket(request, form)

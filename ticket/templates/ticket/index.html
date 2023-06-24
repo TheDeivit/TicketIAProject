@@ -28,11 +28,12 @@
       <table class="table table-sm">
     <tr>
         <th class="icon-column"><div class="small">FOLIO</div></th>
-        <th class="icon-column"><div class="small">NOMBRE</div></th>
+        <th class="icon-column"><div class="small">TITULO</div></th>
         <th class="icon-column"><div class="small">DESCRIPCION</div></th>
         <th class="icon-column"><div class="small">UBICACION</div></th>
         <th class="icon-column"><div class="small">DEPARTAMENTO</div></th>
         <th class="icon-column"><div class="small">CATEGORIA</div></th>
+        <th class="icon-column"><div class="small">USUARIO</div></th>
         <th class="icon-column"><div class="small">URGENCIA</div></th>
         <th class="icon-column"><div class="small">ESTADO</div></th>
         <th class="icon-column"><div class="small">CREACION</div></th>
@@ -50,6 +51,7 @@
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.location }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.department }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.category }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.username }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.urgency }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.status }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.created_at }}</span></div></td>
@@ -123,8 +125,8 @@
           <label for="id_urgency">Urgencia:</label>
           {{ form.urgency }}
 
-          {% include 'partials/form_error_field.html' with errors=form.status.errors %} 
-          <label for="id_status">Estado:<span style="color:red"> *</span></label>
+          {% include 'partials/form_error_field.html' with errors=form.status.errors %}
+          <label for="id_status"><strong>Estado:</strong><span style="color:red"> *</span></label>
           {{ form.status }}
 
           {% include 'partials/form_error_field.html' with errors=form.deadline.errors %} 
