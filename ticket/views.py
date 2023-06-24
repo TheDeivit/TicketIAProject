@@ -116,14 +116,18 @@ def _listTicket(request, form):
 
     return render(request, 'ticket/index.html', {'tickets':tickets_page, 'form': form})
 
+@login_required(login_url='login')  # Asegúrate de importar 'login_required' desde 'django.contrib.auth.decorators'
 def _listmyTickets(request, form):
-    tickets = Ticket.objects.order_by('created_at')
+    username = request.user.id  # Obtén el nombre de usuario actualmente autenticado
+
+    tickets = Ticket.objects.filter(username=username).order_by('created_at')  # Filtra los tickets por nombre de usuario
     paginator = Paginator(tickets, 6)
-    
+
     page_number = request.GET.get('page')
     tickets_page = paginator.get_page(page_number)
 
-    return render(request, 'ticket/mytickets.html', {'tickets':tickets_page, 'form': form})
+    return render(request, 'ticket/mytickets.html', {'tickets': tickets_page, 'form': form})
+
 def landingpage(request):
     return render(request,'ticket/landingpage.html')
 
