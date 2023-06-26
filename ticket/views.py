@@ -9,6 +9,7 @@ from .forms import TicketForm
 from bson import ObjectId
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.models import Group
 
 
 # Create your views here.
@@ -170,6 +171,8 @@ def landingpage(request):
 
 @user_passes_test(is_solicitante, login_url='ticket:index')
 def create_ticket(request):
+    #technicians_group = Group.objects.get(name='Tecnicos')
+    #technicians = technicians_group.user_set.all()
     form = TicketForm()  # Crear una instancia del formulario
     return render(request, 'ticket/create_ticket.html', {'form': form})
 
