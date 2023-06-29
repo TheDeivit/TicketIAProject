@@ -11,6 +11,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth.models import Group
 
+from django.core.exceptions import ValidationError
+from django.db.models import Q
 
 # Create your views here.
 def is_tecnico(user):
@@ -161,9 +163,26 @@ def _listTicket(request, form):
 
 @login_required(login_url='login')  # Asegúrate de importar 'login_required' desde 'django.contrib.auth.decorators'
 def _listmyTickets(request, form):
+    search_query = request.GET.get('search')
     username = request.user.id  # Obtén el nombre de usuario actualmente autenticado
 
     tickets = Ticket.objects.filter(username=username).order_by('created_at')  # Filtra los tickets por nombre de usuario
+    if search_query:
+        try:
+            ticket_id = ObjectId(search_query)
+            tickets = tickets.filter(_id=ticket_id)
+            
+        except:
+            tickets = tickets.filter(
+                Q(name__icontains=search_query) |
+                Q(content__icontains=search_query) |
+                Q(location__name__icontains=search_query) |
+                Q(category__name__icontains=search_query) |
+                Q(urgency__name__icontains=search_query) |
+                Q(technician__first_name__icontains=search_query) |
+                Q(status__name__icontains=search_query) |
+                Q(_id__icontains=search_query)
+            )
     paginator = Paginator(tickets, 6)
 
     page_number = request.GET.get('page')
@@ -173,9 +192,28 @@ def _listmyTickets(request, form):
 
 @login_required(login_url='login')  # Asegúrate de importar 'login_required' desde 'django.contrib.auth.decorators'
 def _listAssignedTickets(request, form):
+    search_query = request.GET.get('search')
     technician = request.user.id  # Obtén el nombre de usuario actualmente autenticado
 
     tickets = Ticket.objects.filter(technician=technician).order_by('created_at')  # Filtra los tickets por nombre de usuario
+    if search_query:
+        try:
+            ticket_id = ObjectId(search_query)
+            tickets = tickets.filter(_id=ticket_id)
+            
+        except:
+            tickets = tickets.filter(
+                Q(name__icontains=search_query) |
+                Q(content__icontains=search_query) |
+                Q(location__name__icontains=search_query) |
+                Q(department__name__icontains=search_query) |
+                Q(category__name__icontains=search_query) |
+                Q(urgency__name__icontains=search_query) |
+                Q(username__first_name__icontains=search_query) |
+                Q(status__name__icontains=search_query) |
+                Q(_id__icontains=search_query)
+            )
+
     paginator = Paginator(tickets, 6)
 
     page_number = request.GET.get('page')
@@ -184,13 +222,31 @@ def _listAssignedTickets(request, form):
     return render(request, 'ticket/index.html', {'tickets': tickets_page, 'form': form})
 
 def _listGlobalTickets(request, form):
+    search_query = request.GET.get('search')
     tickets = Ticket.objects.order_by('created_at')
+
+    if search_query:
+        try:
+            ticket_id = ObjectId(search_query)
+            tickets = tickets.filter(_id=ticket_id)
+            
+        except:
+            tickets = tickets.filter(
+                Q(name__icontains=search_query) |
+                Q(content__icontains=search_query) |
+                Q(location__name__icontains=search_query) |
+                Q(department__name__icontains=search_query) |
+                Q(category__name__icontains=search_query) |
+                Q(urgency__name__icontains=search_query) |
+                Q(username__first_name__icontains=search_query) |
+                Q(status__name__icontains=search_query) |
+                Q(_id__icontains=search_query)
+            )
     paginator = Paginator(tickets, 6)
-    
     page_number = request.GET.get('page')
     tickets_page = paginator.get_page(page_number)
 
-    return render(request, 'ticket/globaltickets.html', {'tickets':tickets_page, 'form': form})
+    return render(request, 'ticket/globaltickets.html', {'tickets': tickets_page, 'form': form})
 
 def landingpage(request):
     return render(request,'ticket/landingpage.html')
