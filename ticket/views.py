@@ -24,7 +24,7 @@ def is_helpdesk(user):
 
 @user_passes_test(is_tecnico, login_url='ticket:create_ticket')
 def index(request):
-    return _listTicket(request, TicketForm())
+    return _listAssignedTickets(request, TicketForm())
 
 def mytickets(request):
     return _listmyTickets(request, TicketForm())
@@ -37,10 +37,15 @@ def add(request):
         
         form = TicketForm(request.POST)#, request.FILES
         if form.is_valid():
-            form = form.save(commit=False)
-            form.username = request.user
-            form.save()
+            ticket = form.save(commit=False)
+            ticket.username = request.user
+            technician_id = request.POST.get('technician')  # Obtener el ID del técnico seleccionado
+            ticket.technician_id = technician_id
+            print(technician_id)
+            ticket.save()
+            print("Fue valido")
         else:
+            print("No valido")
             return _listTicket(request, form)
         
     return redirect('ticket:create_ticket')
@@ -53,7 +58,9 @@ def update(request, pk):
 
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
-            form.save()
+            technician_id = request.POST.get('technician')  # Obtener el ID del técnico seleccionado
+            ticket.technician_id = technician_id
+            ticket.save()
         else:
             return _listTicket(request, form)
         
@@ -67,7 +74,9 @@ def updateGlobal(request, pk):
 
         form = TicketForm(request.POST, instance=ticket)
         if form.is_valid():
-            form.save()
+            technician_id = request.POST.get('technician')  # Obtener el ID del técnico seleccionado
+            ticket.technician_id = technician_id
+            ticket.save()
         else:
             return _listGlobalTickets(request, form)
         
@@ -133,6 +142,11 @@ def myticket_details(request, pk):
 def globalticket_details(request, pk):
     ticket = Ticket.objects.get(pk=ObjectId(pk))
     return render(request, 'ticket/globalticket_details.html', {'ticket': ticket})
+
+@user_passes_test(is_tecnico, login_url='ticket:create_ticket')
+def myassignedtickets_details(request, pk):
+    ticket = Ticket.objects.get(pk=ObjectId(pk))
+    return render(request, 'ticket/myassignedtickets_details.html', {'ticket': ticket})
 #PRIVATE
 
 
@@ -156,6 +170,18 @@ def _listmyTickets(request, form):
     tickets_page = paginator.get_page(page_number)
 
     return render(request, 'ticket/mytickets.html', {'tickets': tickets_page, 'form': form})
+
+@login_required(login_url='login')  # Asegúrate de importar 'login_required' desde 'django.contrib.auth.decorators'
+def _listAssignedTickets(request, form):
+    technician = request.user.id  # Obtén el nombre de usuario actualmente autenticado
+
+    tickets = Ticket.objects.filter(technician=technician).order_by('created_at')  # Filtra los tickets por nombre de usuario
+    paginator = Paginator(tickets, 6)
+
+    page_number = request.GET.get('page')
+    tickets_page = paginator.get_page(page_number)
+
+    return render(request, 'ticket/index.html', {'tickets': tickets_page, 'form': form})
 
 def _listGlobalTickets(request, form):
     tickets = Ticket.objects.order_by('created_at')
@@ -194,4 +220,5 @@ def jgetTicketId(request,pk):
         'category_id': str(ticket.category._id),
         'department_id': str(ticket.department._id),
         'deadline': ticket.deadline.strftime('%Y-%m-%d'),
+        'technician_id': str(ticket.technician.id),
     })

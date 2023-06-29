@@ -7,6 +7,7 @@ class Base(models.Model):
     _id = models.ObjectIdField()
     name = models.CharField(max_length=255)
     username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    
     @property
     def pk(self):
         return self._id
@@ -48,6 +49,7 @@ class Ticket(Base):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     deadline = models.DateField()
+    technician = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name="technician")
     #evidence = models.FileField(upload_to='evidences/', blank=True, null=True)
 
     

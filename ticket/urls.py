@@ -25,6 +25,7 @@ urlpatterns = [
     path('ticket/mytickets', views.mytickets, name='mytickets'),
     path('globalticket/details/<str:pk>', views.globalticket_details, name='globalticket_details'),
     path('ticket/globaltickets', views.globaltickets, name='globaltickets'),
+    path('myassignedtickets/details/<str:pk>', views.myassignedtickets_details, name='myassignedtickets_details'),
     #path('ticket/user_index', views.user_index, name='user_index'),
 
 ]

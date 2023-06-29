@@ -5,7 +5,7 @@ from django.forms import FileField
 from django.contrib.auth.models import User
 
 class TicketForm(forms.ModelForm):
-    #technician = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='Tecnicos'))
+    technician = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='Tecnicos'))
     #DA ESTILO AL FORM
     def __init__(self, *args, **kwargs):
         super(TicketForm, self).__init__(*args, **kwargs)

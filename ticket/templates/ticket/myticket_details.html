@@ -38,7 +38,7 @@
                 </tr>
                 <tr>
                   <th scope="row" class="text-default">Usuario:</th>
-                  <td>{{ ticket.username }}</td>
+                  <td>{{ ticket.username.first_name }}</td>
                 </tr>
                 <tr>
                   <th scope="row" class="text-default">Urgencia:</th>
@@ -47,6 +47,10 @@
                 <tr>
                   <th scope="row" class="text-default">Estado:</th>
                   <td>{{ ticket.status }}</td>
+                </tr>
+                <tr>
+                  <th scope="row" class="text-default">Gestor:</th>
+                  <td>{{ ticket.technician.first_name }}</td>
                 </tr>
                 <tr>
                   <th scope="row" class="text-default">Creación:</th>

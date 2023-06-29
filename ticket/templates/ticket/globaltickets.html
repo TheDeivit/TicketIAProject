@@ -36,6 +36,7 @@
         <th class="icon-column"><div class="small">USUARIO</div></th>
         <th class="icon-column"><div class="small">URGENCIA</div></th>
         <th class="icon-column"><div class="small">ESTADO</div></th>
+        <th class="icon-column"><div class="small">GESTOR</div></th>
         <th class="icon-column"><div class="small">CREACION</div></th>
         <th class="icon-column"><div class="small">LIMITE</div></th>
         <th class="icon-column"><div class="small">DETALLES</div></th>
@@ -54,6 +55,7 @@
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.username }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.urgency }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.status }}</span></div></td>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ t.technician.first_name }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.created_at }}</span></div></td>
         <td class="text-column"><div class="small"><span class="truncate-text">{{ t.deadline }}</span></div></td>
         <td class="icon-column">
@@ -128,6 +130,10 @@
           {% include 'partials/form_error_field.html' with errors=form.status.errors %}
           <label for="id_status"><strong>Estado:</strong><span style="color:red"> *</span></label>
           {{ form.status }}
+
+          {% include 'partials/form_error_field.html' with errors=form.technician.errors %}
+          <label for="id_technician"><strong>Gestor:</strong><span style="color:red"> *</span></label>
+          {{ form.technician }}
 
           {% include 'partials/form_error_field.html' with errors=form.deadline.errors %} 
           <label for="id_deadline">Fecha límite:</label>
@@ -266,6 +272,9 @@
 
       const status = document.querySelector('#saveForm [name=status] option[value="'+res.status_id+'"]').selected="selected"
       status.value = res.status
+
+      const technician = document.querySelector('#saveForm [name=technician] option[value="'+res.technician_id+'"]').selected="selected"
+      technician.value = res.technician
 
       const category = document.querySelector('#saveForm [name=category] option[value="'+res.category_id+'"]').selected="selected"
       category.value = res.category

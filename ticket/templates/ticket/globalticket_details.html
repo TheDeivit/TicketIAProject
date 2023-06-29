@@ -49,6 +49,10 @@
                   <td>{{ ticket.status }}</td>
                 </tr>
                 <tr>
+                  <th scope="row" class="text-default">Gestor:</th>
+                  <td>{{ ticket.technician.first_name }}</td>
+                </tr>
+                <tr>
                   <th scope="row" class="text-default">Creación:</th>
                   <td>{{ ticket.created_at }}</td>
                 </tr>

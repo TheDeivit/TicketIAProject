@@ -67,9 +67,19 @@
           <label for="id_urgency">Urgencia:<span style="color:red"> *</span></label>
           {{ form.urgency }}
 
-          {% comment %} {% include 'partials/form_error_field.html' with errors=form.technician.errors %} 
-          <label for="id_technician">Tecnico:<span style="color:red"> *</span></label>
+          {% comment %} {% include 'partials/form_error_field.html' with errors=form.technician.errors %}
+          <label for="id_technician">Gestor:</label>
           {{ form.technician }} {% endcomment %}
+
+          {% include 'partials/form_error_field.html' with errors=form.technician.errors %}
+          <select name="technician" id="id_technician" class="form-select" required>
+            <option value="4" selected>4</option>
+          </select>
+          <script>
+            // Ocultar el campo de selección para que parezca un campo de texto estático
+            var statusField = document.getElementById("id_technician");
+            statusField.style.display = "none";
+          </script>
 
           {% include 'partials/form_error_field.html' with errors=form.deadline.errors %} 
           <label for="id_deadline">Fecha límite:<span style="color:red"> *</span></label>
@@ -85,7 +95,6 @@
             <option value="6496548c27f7733251b8baf0" selected>6496548c27f7733251b8baf0</option>
           </select>
           <script>
-
             // Ocultar el campo de selección para que parezca un campo de texto estático
             var statusField = document.getElementById("id_status");
             statusField.style.display = "none";
