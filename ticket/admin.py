@@ -6,7 +6,7 @@ from django.contrib.admin import AdminSite
 # Register your models here.
 admin.site.site_header = 'Ticket IA Admin'
 admin.site.site_title = 'Ticket IA Sitio Administrativo'
-
+#Hola
 @admin.register(Ticket)
 class AdminTicket(admin.ModelAdmin):
     search_fields = ['name']
