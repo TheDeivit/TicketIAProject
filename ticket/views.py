@@ -154,7 +154,7 @@ def myassignedtickets_details(request, pk):
 
 def _listTicket(request, form):
     tickets = Ticket.objects.order_by('created_at')
-    paginator = Paginator(tickets, 6)
+    paginator = Paginator(tickets, 4)
     
     page_number = request.GET.get('page')
     tickets_page = paginator.get_page(page_number)
@@ -183,7 +183,7 @@ def _listmyTickets(request, form):
                 Q(status__name__icontains=search_query) |
                 Q(_id__icontains=search_query)
             )
-    paginator = Paginator(tickets, 6)
+    paginator = Paginator(tickets, 4)
 
     page_number = request.GET.get('page')
     tickets_page = paginator.get_page(page_number)
@@ -214,7 +214,7 @@ def _listAssignedTickets(request, form):
                 Q(_id__icontains=search_query)
             )
 
-    paginator = Paginator(tickets, 6)
+    paginator = Paginator(tickets, 4)
 
     page_number = request.GET.get('page')
     tickets_page = paginator.get_page(page_number)
@@ -242,7 +242,7 @@ def _listGlobalTickets(request, form):
                 Q(status__name__icontains=search_query) |
                 Q(_id__icontains=search_query)
             )
-    paginator = Paginator(tickets, 6)
+    paginator = Paginator(tickets, 4)
     page_number = request.GET.get('page')
     tickets_page = paginator.get_page(page_number)
 

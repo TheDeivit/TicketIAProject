@@ -102,3 +102,28 @@
     padding-left: 15px;
     padding-right: 15px;
   }
+
+  .ticket-status-nuevo {
+    background-color: red !important;
+    color: white !important;
+  }
+  
+  .ticket-status-abierto {
+    background-color: rgb(0, 110, 255) !important;
+    color: white !important;
+  }
+  
+  .ticket-status-pendiente {
+    background-color: orange !important;
+    color: white !important;
+  }
+  
+  .ticket-status-resuelto {
+    background-color: green !important;
+    color: white !important;
+  }
+  
+  .ticket-status-cerrado {
+    background-color: gray !important;
+    color: white !important;
+  }
