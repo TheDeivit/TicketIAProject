@@ -18,11 +18,12 @@
     </form>
   </div>
   <div class="d-flex justify-content-end">
-    <a class="btn btn-warning mx-1" href="{% url 'ticket:globaltickets' %}?search=Pendiente">Pendiente</a>
     <a class="btn btn-danger mx-1" href="{% url 'ticket:globaltickets' %}?search=Nuevo">Nuevo</a>
     <a class="btn btn-primary mx-1" href="{% url 'ticket:globaltickets' %}?search=Abierto">Abierto</a>
+    <a class="btn btn-warning mx-1" href="{% url 'ticket:globaltickets' %}?search=Pendiente">Pendiente</a>
     <a class="btn btn-success mx-1" href="{% url 'ticket:globaltickets' %}?search=Resuelto">Resuelto</a>
     <a class="btn btn-secondary mx-1" href="{% url 'ticket:globaltickets' %}?search=Cerrado">Cerrado</a>
+    <a class="btn btn-purple mx-1" href="{% url 'ticket:globaltickets' %}?search="><i class="fa-solid fa-broom"></i></a>
   </div>
 </div>
 
