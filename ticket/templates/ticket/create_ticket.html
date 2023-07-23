@@ -74,12 +74,12 @@
           {% include 'partials/form_error_field.html' with errors=form.technician.errors %}
           <select name="technician" id="id_technician" class="form-select" required>
              {% comment %} MARIO <option value="5" selected>5</option> {% endcomment %}
-             <option value="4" selected>4</option> <!--DAVID-->
+             <option value="5" selected>5</option> <!--DAVID-->
           </select>
           <script>
             // Ocultar el campo de selección para que parezca un campo de texto estático
-            var statusField = document.getElementById("id_technician");
-            statusField.style.display = "none";
+            var technicianField = document.getElementById("id_technician");
+            technicianField.style.display = "none";
           </script>
 
           {% include 'partials/form_error_field.html' with errors=form.deadline.errors %} 
@@ -94,7 +94,7 @@
           {% include 'partials/form_error_field.html' with errors=form.status.errors %}
           <select name="status" id="id_status" class="form-select" required>
             {% comment %} MARIO <option value="64b47d1add7b88a37e4f5ccc" selected>64b47d1add7b88a37e4f5ccc</option> {% endcomment %}
-            <option value="6496548c27f7733251b8baf0" selected>6496548c27f7733251b8baf0</option> <!--DAVID-->
+            <option value="64bdb4a253f76d841b0a59e3" selected>64bdb4a253f76d841b0a59e3</option> <!--DAVID-->
           </select>
           <script>
             // Ocultar el campo de selección para que parezca un campo de texto estático
@@ -110,6 +110,16 @@
           {% include 'partials/form_error_field.html' with errors=form.content.errors %} 
           <label for="id_content">Descripcion:<span style="color:red"> *</span></label>
           {{ form.content }}
+
+          {% include 'partials/form_error_field.html' with errors=form.case.errors %}
+          <select name="case" id="id_case" class="form-select" required>
+            <option value="64bdb4df53f76d841b0a59f1" selected>64bdb4df53f76d841b0a59f1</option> <!--DAVID-->
+          </select>
+          <script>
+            // Ocultar el campo de selección para que parezca un campo de texto estático
+            var caseField = document.getElementById("id_case");
+            caseField.style.display = "none";
+          </script>
 
       </div>
         <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" class title="Cancelar"><i class="fa fa-cancel"></i></button>

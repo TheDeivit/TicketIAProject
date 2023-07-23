@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 class Base(models.Model):
     _id = models.ObjectIdField()
     name = models.CharField(max_length=255)
-    username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     
     @property
     def pk(self):
@@ -38,6 +37,9 @@ class Department(Base):
     class Meta:
         verbose_name_plural = "Departamentos"
 
+class Case(Base):
+    class Meta:
+        verbose_name_plural = "Caso"
 
 # Create your models here.
 class Ticket(Base):
@@ -50,6 +52,8 @@ class Ticket(Base):
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     deadline = models.DateField()
     technician = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name="technician")
+    username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    case = models.ForeignKey(Case, on_delete=models.CASCADE)
     #evidence = models.FileField(upload_to='evidences/', blank=True, null=True)
 
     
