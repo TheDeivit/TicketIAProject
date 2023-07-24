@@ -24,8 +24,8 @@
     <a class="btn btn-success mx-1" href="{% url 'ticket:globaltickets' %}?search=Resuelto">Resuelto</a>
     <a class="btn btn-secondary mx-1" href="{% url 'ticket:globaltickets' %}?search=Cerrado">Cerrado</a>
     <a class="btn btn-purple mx-1" href="{% url 'ticket:globaltickets' %}?search="><i class="fa-solid fa-broom"></i></a>
-    <a class="btn btn-info mx-1" href="{% url 'ticket:specialtickets' %}">Casos Especiales</a>
   </div>
+  <a class="btn btn-info mx-1" href="{% url 'ticket:specialtickets' %}" style="color: white">Casos Especiales</a>
 </div>
 
 {% include 'partials/pagination.html' with page_obj=tickets %}
