@@ -4,7 +4,7 @@ from django.http import JsonResponse
 
 from bson.objectid import ObjectId
 
-from .models import Ticket
+from .models import Ticket, SpecialCase
 from .forms import TicketForm
 from bson import ObjectId
 from django.contrib.auth import authenticate, login, logout
@@ -33,6 +33,9 @@ def mytickets(request):
 
 def globaltickets(request):
     return _listGlobalTickets(request, TicketForm())
+
+def specialtickets(request):
+    return _listSpecialTickets(request, TicketForm())
 
 def add(request):
     if request.method == 'POST':
@@ -145,6 +148,10 @@ def globalticket_details(request, pk):
     ticket = Ticket.objects.get(pk=ObjectId(pk))
     return render(request, 'ticket/globalticket_details.html', {'ticket': ticket})
 
+def specialticket_details(request, pk):
+    ticket = Ticket.objects.get(pk=ObjectId(pk))
+    return render(request, 'ticket/specialticket_details.html', {'ticket': ticket})
+
 @user_passes_test(is_tecnico, login_url='ticket:create_ticket')
 def myassignedtickets_details(request, pk):
     ticket = Ticket.objects.get(pk=ObjectId(pk))
@@ -247,6 +254,47 @@ def _listGlobalTickets(request, form):
     tickets_page = paginator.get_page(page_number)
 
     return render(request, 'ticket/globaltickets.html', {'tickets': tickets_page, 'form': form})
+
+def _listSpecialTickets(request, form):
+    search_query = request.GET.get('search')
+    tickets = Ticket.objects.order_by('created_at')
+    special_case_name = "Especial"  # Replace this with the specific name you are looking for
+    try:
+        special_case = SpecialCase.objects.get(name=special_case_name)
+    except SpecialCase.DoesNotExist:
+        # Handle the case when the special case doesn't exist
+        special_case = None
+
+    if special_case:
+        # Filter tickets only for the technician and the specific special case
+        tickets = Ticket.objects.filter(specialCase_id=special_case._id).order_by('created_at')
+    else:
+        # Handle the case when the special case doesn't exist (optional)
+        tickets = Ticket.objects.none()
+
+    print('Casos Especiales')
+    if search_query:
+        try:
+            ticket_id = ObjectId(search_query)
+            tickets = tickets.filter(_id=ticket_id)
+            
+        except:
+            tickets = tickets.filter(
+                Q(name__icontains=search_query) |
+                Q(content__icontains=search_query) |
+                Q(location__name__icontains=search_query) |
+                Q(department__name__icontains=search_query) |
+                Q(category__name__icontains=search_query) |
+                Q(urgency__name__icontains=search_query) |
+                Q(username__first_name__icontains=search_query) |
+                Q(status__name__icontains=search_query) |
+                Q(_id__icontains=search_query)
+            )
+    paginator = Paginator(tickets, 8)
+    page_number = request.GET.get('page')
+    tickets_page = paginator.get_page(page_number)
+
+    return render(request, 'ticket/specialtickets.html', {'tickets': tickets_page, 'form': form})
 
 def landingpage(request):
     return render(request,'ticket/landingpage.html')

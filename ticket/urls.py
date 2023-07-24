@@ -24,7 +24,9 @@ urlpatterns = [
     path('myticket/details/<str:pk>', views.myticket_details, name='myticket_details'),
     path('ticket/mytickets', views.mytickets, name='mytickets'),
     path('globalticket/details/<str:pk>', views.globalticket_details, name='globalticket_details'),
+    path('specialticket/details/<str:pk>', views.specialticket_details, name='specialticket_details'),
     path('ticket/globaltickets', views.globaltickets, name='globaltickets'),
+    path('ticket/specialtickets', views.specialtickets, name='specialtickets'),
     path('myassignedtickets/details/<str:pk>', views.myassignedtickets_details, name='myassignedtickets_details'),
     #path('ticket/user_index', views.user_index, name='user_index'),
 

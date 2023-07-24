@@ -3,14 +3,17 @@
 {% load static %}
 
 <div class="d-flex justify-content-end">
-  <a class="btn btn-danger my-3" href="{% url 'ticket:logout' %}">
-    <i class="fa fa-right-from-bracket"></i> Cerrar sesión
+  <a class="btn btn-warning my-3" href="{% url 'ticket:globaltickets'  %}">
+    <i class="fa fa-hand-point-left"></i> Regresar
   </a>
 </div>
 
+    
+  
+
 <div class="container-fluid mt-2">
   <div class="d-flex justify-content-start">
-    <form class="mb-3" action="{% url 'ticket:globaltickets' %}" method="GET">
+    <form class="mb-3" action="{% url 'ticket:specialtickets' %}" method="GET">
       <div class="input-group">
         <input type="text" class="form-control" name="search" placeholder="Buscar folio..." value="{{ request.GET.search }}">
         <button type="submit" class="btn btn-primary">Buscar</button>
@@ -18,13 +21,12 @@
     </form>
   </div>
   <div class="d-flex justify-content-end">
-    <a class="btn btn-danger mx-1" href="{% url 'ticket:globaltickets' %}?search=Nuevo">Nuevo</a>
-    <a class="btn btn-primary mx-1" href="{% url 'ticket:globaltickets' %}?search=Abierto">Abierto</a>
-    <a class="btn btn-warning mx-1" href="{% url 'ticket:globaltickets' %}?search=Pendiente">Pendiente</a>
-    <a class="btn btn-success mx-1" href="{% url 'ticket:globaltickets' %}?search=Resuelto">Resuelto</a>
-    <a class="btn btn-secondary mx-1" href="{% url 'ticket:globaltickets' %}?search=Cerrado">Cerrado</a>
-    <a class="btn btn-purple mx-1" href="{% url 'ticket:globaltickets' %}?search="><i class="fa-solid fa-broom"></i></a>
-    <a class="btn btn-info mx-1" href="{% url 'ticket:specialtickets' %}">Casos Especiales</a>
+    <a class="btn btn-danger mx-1" href="{% url 'ticket:specialtickets' %}?search=Nuevo">Nuevo</a>
+    <a class="btn btn-primary mx-1" href="{% url 'ticket:specialtickets' %}?search=Abierto">Abierto</a>
+    <a class="btn btn-warning mx-1" href="{% url 'ticket:specialtickets' %}?search=Pendiente">Pendiente</a>
+    <a class="btn btn-success mx-1" href="{% url 'ticket:specialtickets' %}?search=Resuelto">Resuelto</a>
+    <a class="btn btn-secondary mx-1" href="{% url 'ticket:specialtickets' %}?search=Cerrado">Cerrado</a>
+    <a class="btn btn-purple mx-1" href="{% url 'ticket:specialtickets' %}?search="><i class="fa-solid fa-broom"></i></a>
   </div>
 </div>
 
@@ -40,7 +42,7 @@
               {{ t.name }}
             </h3>
             <td class="icon-column">
-              <a href="{% url 'ticket:globalticket_details' t.pk %}" class="btn btn-outline-primary btn-outline-light float-right">
+              <a href="{% url 'ticket:specialticket_details' t.pk %}" class="btn btn-outline-primary btn-outline-light float-right">
                 <i class="fa fa-eye"></i>
               </a>
             </td>
