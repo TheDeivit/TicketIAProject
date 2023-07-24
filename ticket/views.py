@@ -273,6 +273,7 @@ def jgetTicketId(request,pk):
         'location_id': str(ticket.location._id),
         'urgency_id': str(ticket.urgency._id),
         'status_id': str(ticket.status._id),
+        'specialCase_id': str(ticket.specialCase._id),
         'category_id': str(ticket.category._id),
         'department_id': str(ticket.department._id),
         'deadline': ticket.deadline.strftime('%Y-%m-%d'),

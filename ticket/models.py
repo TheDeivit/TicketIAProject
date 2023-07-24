@@ -29,6 +29,10 @@ class Status(Base):
     class Meta:
         verbose_name_plural = "Estados"
 
+class SpecialCase(Base):
+    class Meta:
+        verbose_name_plural = "Casos"
+
 class Category(Base):
     class Meta:
         verbose_name_plural = "Categorias"
@@ -37,10 +41,6 @@ class Department(Base):
     class Meta:
         verbose_name_plural = "Departamentos"
 
-class Case(Base):
-    class Meta:
-        verbose_name_plural = "Caso"
-
 # Create your models here.
 class Ticket(Base):
     content = models.TextField()
@@ -48,12 +48,12 @@ class Ticket(Base):
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     urgency = models.ForeignKey(Urgency, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
+    specialCase = models.ForeignKey(SpecialCase, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     deadline = models.DateField()
     technician = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name="technician")
     username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
-    case = models.ForeignKey(Case, on_delete=models.CASCADE)
     #evidence = models.FileField(upload_to='evidences/', blank=True, null=True)
 
     

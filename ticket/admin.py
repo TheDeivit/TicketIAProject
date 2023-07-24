@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Ticket, Location, Urgency, Status, Category, Department, Case
+from .models import Ticket, Location, Urgency, Status, Category, Department, SpecialCase
 from .forms import TicketForm
 from django.contrib.admin import AdminSite
 
@@ -32,6 +32,6 @@ class AdminCategory(admin.ModelAdmin):
 class AdminDepartment(admin.ModelAdmin):
     pass
 
-@admin.register(Case)
-class AdminCase(admin.ModelAdmin):
+@admin.register(SpecialCase)
+class AdminSpecialCase(admin.ModelAdmin):
     pass

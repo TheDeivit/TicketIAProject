@@ -129,6 +129,10 @@
           <label for="id_status"><strong>Estado:</strong><span style="color:red"> *</span></label>
           {{ form.status }}
 
+          {% include 'partials/form_error_field.html' with errors=form.specialCase.errors %}
+          <label for="id_specialCase">Caso:</label>
+          {{ form.specialCase }}
+
           {% include 'partials/form_error_field.html' with errors=form.deadline.errors %} 
           <label for="id_deadline">Fecha límite:</label>
           {{ form.deadline }}
@@ -272,6 +276,9 @@
 
       const department = document.querySelector('#saveForm [name=department] option[value="'+res.department_id+'"]').selected="selected"
       department.value = res.department
+
+      const specialCase = document.querySelector('#saveForm [name=specialCase] option[value="'+res.specialCase_id+'"]').selected="selected"
+      specialCase.value = res.specialCase
 
       const deadline = document.querySelector('#saveForm [name=deadline]')
       deadline.value = res.deadline

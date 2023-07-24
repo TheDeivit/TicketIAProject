@@ -102,6 +102,16 @@
             statusField.style.display = "none";
           </script>
 
+          {% include 'partials/form_error_field.html' with errors=form.specialCase.errors %}
+          <select name="specialCase" id="id_specialCase" class="form-select" required>
+            <option value="64bdcca0b5dec03b9d7d0ce0" selected>64bdcca0b5dec03b9d7d0ce0</option> <!--DAVID-->
+          </select>
+          <script>
+            // Ocultar el campo de selección para que parezca un campo de texto estático
+            var specialCaseField = document.getElementById("id_specialCase");
+            specialCaseField.style.display = "none";
+          </script>
+
 
           {% include 'partials/form_error_field.html' with errors=form.name.errors %} 
           <label for="id_name">Titulo:<span style="color:red"> *</span></label>
@@ -110,16 +120,6 @@
           {% include 'partials/form_error_field.html' with errors=form.content.errors %} 
           <label for="id_content">Descripcion:<span style="color:red"> *</span></label>
           {{ form.content }}
-
-          {% include 'partials/form_error_field.html' with errors=form.case.errors %}
-          <select name="case" id="id_case" class="form-select" required>
-            <option value="64bdb4df53f76d841b0a59f1" selected>64bdb4df53f76d841b0a59f1</option> <!--DAVID-->
-          </select>
-          <script>
-            // Ocultar el campo de selección para que parezca un campo de texto estático
-            var caseField = document.getElementById("id_case");
-            caseField.style.display = "none";
-          </script>
 
       </div>
         <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" class title="Cancelar"><i class="fa fa-cancel"></i></button>
