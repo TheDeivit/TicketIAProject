@@ -33,7 +33,12 @@ class SpecialCase(Base):
     class Meta:
         verbose_name_plural = "Casos"
 
+class CategoryType(Base):
+    class Meta:
+        verbose_name_plural = "Tipo de Categoria"
+
 class Category(Base):
+    categorytype = models.ForeignKey(CategoryType, on_delete=models.CASCADE)
     class Meta:
         verbose_name_plural = "Categorias"
 

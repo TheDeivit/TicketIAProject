@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ticket
+from .models import Ticket, Category
 from bson.objectid import ObjectId
 from django.forms import FileField
 from django.contrib.auth.models import User
@@ -37,4 +37,31 @@ class TicketForm(forms.ModelForm):
         valid = super(TicketForm, self).is_valid()
         
         return valid
-    
+
+class CategoryForm(forms.ModelForm):
+    #DA ESTILO AL FORM
+    def __init__(self, *args, **kwargs):
+        super(CategoryForm, self).__init__(*args, **kwargs)
+
+        for f in iter(self.fields):
+            self.fields[f].widget.attrs.update({
+                'class': 'form-control'
+            })
+
+    class Meta:
+        model = Category
+        fields= ('name', 'categorytype')#, 'evidence'
+        widgets = {
+            'deadline': forms.DateInput(attrs={'type': 'date'})
+        }
+
+    def is_valid(self):
+
+        self.data._mutable = True
+        self.data['categorytype'] = ObjectId(self.data['categorytype'])
+        
+
+        valid = super(CategoryForm, self).is_valid()
+        
+        return valid
+   

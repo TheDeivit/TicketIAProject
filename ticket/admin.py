@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Ticket, Location, Urgency, Status, Category, Department, SpecialCase, Specialty
-from .forms import TicketForm
+from .models import Ticket, Location, Urgency, Status, Category, Department, SpecialCase, Specialty, CategoryType
+from .forms import TicketForm, CategoryForm
 from django.contrib.admin import AdminSite
 
 # Register your models here.
@@ -24,9 +24,14 @@ class AdminUrgency(admin.ModelAdmin):
 class AdminStatus(admin.ModelAdmin):
     pass
 
+@admin.register(CategoryType)
+class AdminCategoryType(admin.ModelAdmin):
+    pass
+
 @admin.register(Category)
 class AdminCategory(admin.ModelAdmin):
-    pass
+    search_fields = ['name']
+    form = CategoryForm
 
 @admin.register(Department)
 class AdminDepartment(admin.ModelAdmin):
