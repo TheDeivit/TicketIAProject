@@ -41,6 +41,10 @@ class Department(Base):
     class Meta:
         verbose_name_plural = "Departamentos"
 
+class Specialty(Base):
+    class Meta:
+        verbose_name_plural = "Especialidad"
+
 # Create your models here.
 class Ticket(Base):
     content = models.TextField()
