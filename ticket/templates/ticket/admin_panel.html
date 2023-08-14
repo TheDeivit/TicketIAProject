@@ -1,0 +1,157 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+
+<div class="d-flex justify-content-end">
+  <a class="btn btn-danger my-3" href="{% url 'ticket:logout' %}">
+    <i class="fa fa-right-from-bracket"></i>  Cerrar sesión
+  </a>
+</div>
+
+{% include 'partials/pagination.html' with page_obj=tickets %}
+
+
+<div class="d-flex justify-content-center">
+  <div class="col">
+      <div class="d-flex justify-content-center table-container">
+          <div class="table-responsive">
+              <table class="table table-sm">
+                  <thead>
+                      <tr>
+                          <th class="icon-column"><div class="small" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">GRUPOS Y USUARIOS</div></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td><a href="#" class="btn btn-primary btn-sm">Grupos</a></td>
+                      </tr>
+                      <tr>
+                          <td><a href="#" class="btn btn-primary btn-sm">Usuarios</a></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  
+  <div class="col">
+      <div class="d-flex justify-content-center align-items-start table-container">
+          <div class="table-responsive">
+              <table class="table table-sm">
+                  <thead>
+                      <tr>
+                          <th class="icon-column"><div class="small">CATALOGOS</div></th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <tr>
+                          <td><a href="{% url 'ticket:cases' %}" class="btn btn-primary btn-sm">Casos</a></td>
+                      </tr>
+                      <tr>
+                          <td><a href="#" class="btn btn-primary btn-sm">Categorias</a></td>
+                      </tr>
+                      <tr>
+                          <td><a href="#" class="btn btn-primary btn-sm">Departamentos</a></td>
+                      </tr>
+                      <tr>
+                          <td><a href="#" class="btn btn-primary btn-sm">Especialidad</a></td>
+                      </tr>
+                      <tr>
+                          <td><a href="#" class="btn btn-primary btn-sm">Estados</a></td>
+                      </tr>
+                      <tr>
+                          <td><a href="#" class="btn btn-primary btn-sm" style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;">Niveles de Urgencia</a></td>
+                      </tr>
+                      <tr>
+                          <td><a href="#" class="btn btn-primary btn-sm">Tipo de Categoria</a></td>
+                      </tr>
+                      <tr>
+                          <td><a href="#" class="btn btn-primary btn-sm">Ubicaciones</a></td>
+                      </tr>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+</div>
+
+
+<script>
+  window.onload = function () {
+    saveTicket()
+    {% comment %} deleteTicket() {% endcomment %}
+  }
+
+  function deleteTicket(){
+    const deleteModal = document.getElementById("deleteModal")
+    const deleteForm = document.getElementById("deleteForm")
+
+    deleteModal.addEventListener("show.bs.modal", (event) => {
+    // Button that triggered the modal
+    const button = event.relatedTarget;
+    // Extract info from data-bs-* attributes
+    const id = button.getAttribute("data-bs-id");
+    const name = button.getAttribute("data-bs-name");
+
+    document.querySelector("#deleteModal .modal-title span").textContent = name
+    deleteForm.setAttribute("action",deleteForm.getAttribute("delete_action").slice(0, -1) + id)
+
+  })
+  }
+
+
+
+  function saveTicket(){
+    const saveModal = document.getElementById("saveModal")
+
+    if (document.querySelectorAll("#saveModal .text-danger").length > 0) {
+      const saveModali = new bootstrap.Modal(saveModal)
+      saveModali.show();
+    }
+
+    const saveForm = document.getElementById("saveForm")
+
+    saveModal.addEventListener("show.bs.modal", (event) => {
+    // Button that triggered the modal
+    const button = event.relatedTarget;
+    // Extract info from data-bs-* attributes
+    const id = button.getAttribute("data-bs-id");
+    const name = button.getAttribute("data-bs-name");
+
+    if (id == null) {
+      //add
+      saveForm.setAttribute("action", saveForm.getAttribute("add_action"))
+      document.querySelector("#saveModal .modal-title").textContent = "Crear Ticket"
+    } else {
+      //update
+      saveForm.setAttribute("action",saveForm.getAttribute("update_action").slice(0, -1) + id)
+      document.querySelector("#saveModal .modal-title").textContent = "Actualizar Ticket: " + name
+      getInfoTicket(id)
+    }
+  })
+}
+
+  function cleanForm()
+  {
+    const name = document.querySelector('#saveForm [name=name]')
+    name.value = ""
+    const content = document.querySelector('#saveForm [name=content]')
+    content.value = ""
+  }
+
+  function getInfoTicket(ticketId){
+
+    fetch('http://127.0.0.1:8000/ticket/j-get-ticket-by-id/' + ticketId)
+    .then(res => res.json())
+    .then(res => {
+      if(res == 'name')
+        return 
+
+      const name = document.querySelector('#saveForm [name=name]')
+      name.value = res.name
+      
+    })
+  }
+
+</script>
+{% endblock %}

@@ -1,0 +1,199 @@
+{% extends 'base.html' %} 
+{% block content %}
+{% load static %}
+
+<div class="d-flex justify-content-end">
+  <a class="btn btn-danger my-3" href="{% url 'ticket:logout' %}">
+    <i class="fa fa-right-from-bracket"></i> Cerrar sesión
+  </a>
+</div>
+<div class="d-flex justify-content-center">
+    <button onclick="cleanForm()" class="btn btn-success my-1" data-bs-toggle="modal" data-bs-target="#saveModal"><i class="fa fa-plus"></i> Crear</button>
+</div>
+
+{% include 'partials/pagination.html' with page_obj=tickets %}
+
+<div class="d-flex justify-content-center table-container">
+    <div class="table-responsive">
+      <table class="table table-sm">
+    <tr>
+        <th class="icon-column"><div class="small">NOMBRE</div></th>
+        <th class="icon-column"><div class="small">ACTUALIZAR</div></th>
+        <th class="icon-column"><div class="small">ELIMINAR</div></th>
+    </tr>
+    {% for c in cases %}
+    <tr>
+        <td class="text-column"><div class="small"><span class="truncate-text">{{ c.name }}</span></div></td>
+        <td class="icon-column">
+            <button class="btn btn-outline-primary float-right btn-custom" data-bs-toggle="modal" data-bs-target="#saveModal" data-bs-id="{{ c.pk }}" data-bs-name="{{ c.name }}">
+                <i class="fa fa-edit"></i>
+            </button>
+        </td>
+        <td class="icon-column">
+            <button class="btn btn-outline-danger float-right btn-custom" data-bs-toggle="modal" data-bs-target="#deleteModal" data-bs-id="{{ c.pk }}" data-bs-name="{{ c.name }}">
+                <i class="fa fa-trash"></i>
+            </button>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+</div>
+</div> 
+</div>
+
+<!-- CREAR O ACTUALIZAR TICKET -->
+
+<div class="modal fade" tabindex="-1" id="saveModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          {% if form.instance.pk %}
+            Actualizar Caso: {{ form.instance.name }}
+          {% else %}
+            Crear nuevo caso especial
+          {% endif %}
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+          title="Cerrar"
+        ></button>
+      </div>
+      <form id="saveForm" action="
+      {% if form.instance.pk %}
+        {% url 'ticket:update' form.instance.pk %}
+      {% else %}
+        {% url 'ticket:add' %}
+      {% endif %}" 
+      add_action="{% url 'ticket:add' %}" update_action="{% url 'ticket:update' 0 %}" method="post">
+        <div class="modal-body">
+
+          {% csrf_token %}
+          
+          {% include 'partials/form_error_field.html' with errors=form.name.errors %} 
+          <label for="id_name">Nombre:</label>
+          {{ form.name }}
+
+
+          
+
+      </div>
+        <div class="modal-footer"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" class title="Cancelar"><i class="fa fa-cancel"></i></button>
+          <button type="submit" class="btn btn-primary" title="Guardar"><i class="fa fa-save"></i></button>
+          
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- BORRAR LIBRO -->
+
+<div class="modal fade" tabindex="-1" id="deleteModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Borrar Caso: <span></span></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form id="deleteForm" action=""  delete_action="{% url 'ticket:delete' 0 %}" method="post">
+        <div class="modal-body">
+          
+          {% csrf_token %}
+
+          <p>¿Seguro que deseas borrar el Ticket seleccionado ?</p>
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+          <button type="submit" class="btn btn-danger">Eliminar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+<script>
+  window.onload = function () {
+    saveTicket()
+    {% comment %} deleteTicket() {% endcomment %}
+  }
+
+  function deleteTicket(){
+    const deleteModal = document.getElementById("deleteModal")
+    const deleteForm = document.getElementById("deleteForm")
+
+    deleteModal.addEventListener("show.bs.modal", (event) => {
+    // Button that triggered the modal
+    const button = event.relatedTarget;
+    // Extract info from data-bs-* attributes
+    const id = button.getAttribute("data-bs-id");
+    const name = button.getAttribute("data-bs-name");
+
+    document.querySelector("#deleteModal .modal-title span").textContent = name
+    deleteForm.setAttribute("action",deleteForm.getAttribute("delete_action").slice(0, -1) + id)
+
+  })
+  
+
+
+
+  function saveTicket(){
+    const saveModal = document.getElementById("saveModal")
+
+    if (document.querySelectorAll("#saveModal .text-danger").length > 0) {
+      const saveModali = new bootstrap.Modal(saveModal)
+      saveModali.show();
+    }
+
+    const saveForm = document.getElementById("saveForm")
+
+    saveModal.addEventListener("show.bs.modal", (event) => {
+    // Button that triggered the modal
+    const button = event.relatedTarget;
+    // Extract info from data-bs-* attributes
+    const id = button.getAttribute("data-bs-id");
+    const name = button.getAttribute("data-bs-name");
+
+    if (id == null) {
+      //add
+      saveForm.setAttribute("action", saveForm.getAttribute("add_action"))
+      document.querySelector("#saveModal .modal-title").textContent = "Crear Ticket"
+    } else {
+      //update
+      saveForm.setAttribute("action",saveForm.getAttribute("update_action").slice(0, -1) + id)
+      document.querySelector("#saveModal .modal-title").textContent = "Actualizar Ticket: " + name
+      getInfoTicket(id)
+    }
+  })
+}
+
+  function cleanForm()
+  {
+    const name = document.querySelector('#saveForm [name=name]')
+    name.value = ""
+    const content = document.querySelector('#saveForm [name=content]')
+    content.value = ""
+  }
+
+  function getInfoTicket(ticketId){
+
+    fetch('http://127.0.0.1:8000/ticket/j-get-ticket-by-id/' + ticketId)
+    .then(res => res.json())
+    .then(res => {
+      if(res == 'name')
+        return 
+
+      const name = document.querySelector('#saveForm [name=name]')
+      name.value = res.name
+
+    })
+  }
+
+</script>
+{% endblock %}

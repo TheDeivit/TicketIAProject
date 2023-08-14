@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ticket, Category
+from .models import Ticket, Category, SpecialCase
 from bson.objectid import ObjectId
 from django.forms import FileField
 from django.contrib.auth.models import User
@@ -64,4 +64,26 @@ class CategoryForm(forms.ModelForm):
         valid = super(CategoryForm, self).is_valid()
         
         return valid
-   
+
+#-----------------FORM DEL CASO
+class SpecialCaseForm(forms.ModelForm):
+    #DA ESTILO AL FORM
+    def __init__(self, *args, **kwargs):
+        super(SpecialCaseForm, self).__init__(*args, **kwargs)
+
+        for f in iter(self.fields):
+            self.fields[f].widget.attrs.update({
+                'class': 'form-control'
+            })
+
+    class Meta:
+        model = SpecialCase
+        fields= ('name',)#, 'evidence'
+
+    def is_valid(self):
+
+        self.data._mutable = True        
+
+        valid = super(SpecialCaseForm, self).is_valid()
+        
+        return valid

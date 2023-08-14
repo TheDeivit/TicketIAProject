@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from bson.objectid import ObjectId
 
 from .models import Ticket, SpecialCase
-from .forms import TicketForm
+from .forms import TicketForm, SpecialCaseForm
 from bson import ObjectId
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -23,6 +23,9 @@ def is_solicitante(user):
 
 def is_helpdesk(user):
     return user.groups.filter(name='Helpdesks').exists()
+
+def is_admin(user):
+    return user.groups.filter(name='Admins').exists()
 
 @user_passes_test(is_tecnico, login_url='ticket:create_ticket')
 def index(request):
@@ -122,6 +125,18 @@ def custom_login(request):
                 # El usuario pertenece al grupo "Solicitantes"
                 # Realiza las acciones correspondientes para los solicitantes
                 return redirect('ticket:globaltickets')
+            elif user.groups.filter(name='Admins').exists():
+                print('Es admin')
+                print(username)
+                # El usuario pertenece al grupo "Solicitantes"
+                # Realiza las acciones correspondientes para los solicitantes
+                return redirect('ticket:admin_panel')
+            elif user.groups.filter(name='Superadmins').exists():
+                print('Es superadmin')
+                print(username)
+                # El usuario pertenece al grupo "Solicitantes"
+                # Realiza las acciones correspondientes para los solicitantes
+                return redirect('/admin')
             else:
                 return render(request, 'ticket/login.html')
         else:
@@ -305,6 +320,23 @@ def create_ticket(request):
     #technicians = technicians_group.user_set.all()
     form = TicketForm()  # Crear una instancia del formulario
     return render(request, 'ticket/create_ticket.html', {'form': form})
+
+
+#---------------------ADMIN
+def admin_panel(request):
+    return render(request, 'ticket/admin_panel.html')
+
+#---------------------- CATALOGOS
+
+#CATALOGO DE CASOS
+def cases_index(request):
+    specialcases = SpecialCase.objects.all()
+    return render(request, 'ticket/catalogs/cases.html', {'cases': specialcases})
+
+
+
+
+
 
 #------------ JSON
 
