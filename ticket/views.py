@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from bson.objectid import ObjectId
 
 from .models import Ticket, SpecialCase
-from .forms import TicketForm, SpecialCaseForm
+from .forms import TicketForm
 from bson import ObjectId
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required, user_passes_test
@@ -331,7 +331,7 @@ def admin_panel(request):
 #CATALOGO DE CASOS
 def cases_index(request):
     specialcases = SpecialCase.objects.all()
-    return render(request, 'ticket/catalogs/cases.html', {'cases': specialcases})
+    return render(request, 'ticket/cases.html', {'cases': specialcases})
 
 
 

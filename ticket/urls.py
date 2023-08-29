@@ -28,9 +28,5 @@ urlpatterns = [
     path('ticket/globaltickets', views.globaltickets, name='globaltickets'),
     path('ticket/admin_panel', views.admin_panel, name='admin_panel'),
     path('ticket/specialtickets', views.specialtickets, name='specialtickets'),
-    path('myassignedtickets/details/<str:pk>', views.myassignedtickets_details, name='myassignedtickets_details'),
-    #path('ticket/user_index', views.user_index, name='user_index'),
-    #CASOS ESPECIALES---------------------------------------------
-    path('ticket/catalogs/cases', views.cases_index, name='cases'),
-    
+    path('myassignedtickets/details/<str:pk>', views.myassignedtickets_details, name='myassignedtickets_details'),    
 ]

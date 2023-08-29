@@ -68,3 +68,13 @@ class Ticket(Base):
     
     class Meta:
         verbose_name_plural = "Tickets"
+
+class Profile(Base):
+    username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    specialty = models.ForeignKey(Specialty, on_delete=models.CASCADE)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+
+    
+    class Meta:
+        verbose_name_plural = "Perfil de Usuario"
+

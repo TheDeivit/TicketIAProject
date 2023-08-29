@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ticket, Category, SpecialCase
+from .models import Ticket, Category, SpecialCase, Profile
 from bson.objectid import ObjectId
 from django.forms import FileField
 from django.contrib.auth.models import User
@@ -65,11 +65,17 @@ class CategoryForm(forms.ModelForm):
         
         return valid
 
-#-----------------FORM DEL CASO
-class SpecialCaseForm(forms.ModelForm):
-    #DA ESTILO AL FORM
+from django import forms
+from .models import Profile, Specialty, Location
+from django.contrib.auth.models import User
+
+class ProfileForm(forms.ModelForm):
+    username = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='Tecnicos'))
+    specialty = forms.ModelChoiceField(queryset=Specialty.objects.all())  # Use the correct queryset
+    location = forms.ModelChoiceField(queryset=Location.objects.all())  # Use the correct queryset
+
     def __init__(self, *args, **kwargs):
-        super(SpecialCaseForm, self).__init__(*args, **kwargs)
+        super(ProfileForm, self).__init__(*args, **kwargs)
 
         for f in iter(self.fields):
             self.fields[f].widget.attrs.update({
@@ -77,13 +83,17 @@ class SpecialCaseForm(forms.ModelForm):
             })
 
     class Meta:
-        model = SpecialCase
-        fields= ('name',)#, 'evidence'
-
+        model = Profile
+        fields = ('username', 'specialty', 'location')
+        widgets = {
+            'deadline': forms.DateInput(attrs={'type': 'date'})
+        }
     def is_valid(self):
 
-        self.data._mutable = True        
+        self.data._mutable = True
+        self.data['specialty'] = ObjectId(self.data['specialty'])
+        self.data['location'] = ObjectId(self.data['location'])
 
-        valid = super(SpecialCaseForm, self).is_valid()
+        valid = super(ProfileForm, self).is_valid()
         
         return valid
