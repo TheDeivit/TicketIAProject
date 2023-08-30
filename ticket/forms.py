@@ -71,8 +71,6 @@ from django.contrib.auth.models import User
 
 class ProfileForm(forms.ModelForm):
     username = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='Tecnicos'))
-    specialty = forms.ModelChoiceField(queryset=Specialty.objects.all())  # Use the correct queryset
-    location = forms.ModelChoiceField(queryset=Location.objects.all())  # Use the correct queryset
 
     def __init__(self, *args, **kwargs):
         super(ProfileForm, self).__init__(*args, **kwargs)
@@ -84,7 +82,7 @@ class ProfileForm(forms.ModelForm):
 
     class Meta:
         model = Profile
-        fields = ('username', 'specialty', 'location')
+        fields = ('name','username', 'specialty', 'location')
         widgets = {
             'deadline': forms.DateInput(attrs={'type': 'date'})
         }
