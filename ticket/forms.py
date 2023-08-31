@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ticket, Category, SpecialCase, Profile
+from .models import Ticket, Category, Profile
 from bson.objectid import ObjectId
 from django.forms import FileField
 from django.contrib.auth.models import User
@@ -64,10 +64,6 @@ class CategoryForm(forms.ModelForm):
         valid = super(CategoryForm, self).is_valid()
         
         return valid
-
-from django import forms
-from .models import Profile, Specialty, Location
-from django.contrib.auth.models import User
 
 class ProfileForm(forms.ModelForm):
     username = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='Tecnicos'))
