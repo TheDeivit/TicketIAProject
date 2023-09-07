@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Ticket, Location, Urgency, Status, Category, Department, SpecialCase, Specialty, CategoryType, Profile
-from .forms import TicketForm, CategoryForm, ProfileForm
+from .models import Ticket, Location, Urgency, Status, Category, Department, SpecialCase, Specialty, CategoryType, Profile, RelationProfileUser
+from .forms import TicketForm, CategoryForm, ProfileForm, RelationProfileUserForm
 from django.contrib.admin import AdminSite
 
 # Register your models here.
@@ -48,3 +48,7 @@ class AdminSpecialty(admin.ModelAdmin):
 @admin.register(Profile)
 class AdminProfile(admin.ModelAdmin):
     form = ProfileForm
+
+@admin.register(RelationProfileUser)
+class AdminRelationProfileUser(admin.ModelAdmin):
+    form = RelationProfileUserForm

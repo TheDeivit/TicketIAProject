@@ -1,5 +1,5 @@
 from django import forms
-from .models import Ticket, Category, Profile
+from .models import Ticket, Category, Profile, RelationProfileUser
 from bson.objectid import ObjectId
 from django.forms import FileField
 from django.contrib.auth.models import User
@@ -89,5 +89,31 @@ class ProfileForm(forms.ModelForm):
         self.data['location'] = ObjectId(self.data['location'])
 
         valid = super(ProfileForm, self).is_valid()
+        
+        return valid
+    
+class RelationProfileUserForm(forms.ModelForm):
+    username = forms.ModelChoiceField(queryset=User.objects.filter(groups__name='Tecnicos'))
+
+    def __init__(self, *args, **kwargs):
+        super(RelationProfileUserForm, self).__init__(*args, **kwargs)
+
+        for f in iter(self.fields):
+            self.fields[f].widget.attrs.update({
+                'class': 'form-control'
+            })
+
+    class Meta:
+        model = RelationProfileUser
+        fields = ('name','username', 'profile')
+        widgets = {
+            'deadline': forms.DateInput(attrs={'type': 'date'})
+        }
+    def is_valid(self):
+
+        self.data._mutable = True
+        self.data['profile'] = ObjectId(self.data['profile'])
+
+        valid = super(RelationProfileUserForm, self).is_valid()
         
         return valid

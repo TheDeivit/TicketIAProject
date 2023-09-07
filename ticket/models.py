@@ -78,3 +78,9 @@ class Profile(Base):
     class Meta:
         verbose_name_plural = "Perfil de Usuario"
 
+class RelationProfileUser(Base):
+    username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    
+    class Meta:
+        verbose_name_plural = "Relacion de Perfil y User"
