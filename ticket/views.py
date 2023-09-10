@@ -157,7 +157,28 @@ def ticket_details(request, pk):
 @user_passes_test(is_solicitante, login_url='ticket:index')
 def myticket_details(request, pk):
     ticket = Ticket.objects.get(pk=ObjectId(pk))
-    return render(request, 'ticket/myticket_details.html', {'ticket': ticket})
+    tiempo_para_resolver = ticket.deadline - ticket.created_at
+    tiempo_para_resolver_str = str(tiempo_para_resolver)
+
+    context = {
+        'ticket': ticket,
+        'tiempo_para_resolver_str': tiempo_para_resolver_str,
+    }
+    #TEST
+    print(ticket.name)
+    print(ticket.department)
+    if ticket.department.name == "Logistica":
+        if ticket.status.name == 'Nuevo': 
+            print('El ticket debe de ir para tecnico1 y es nuevo')
+    #TEST END
+    return render(request, 'ticket/myticket_details.html', context)
+
+def ticket_auto(pk):
+    ticket = Ticket.objects.get(pk=ObjectId(pk))
+
+    if ticket.department == 'Logistica':
+        print('El ticket debe de ir para tecnico1')
+    return
 
 def globalticket_details(request, pk):
     ticket = Ticket.objects.get(pk=ObjectId(pk))
@@ -189,6 +210,8 @@ def _listmyTickets(request, form):
     username = request.user.id  # Obtén el nombre de usuario actualmente autenticado
 
     tickets = Ticket.objects.filter(username=username).order_by('created_at')  # Filtra los tickets por nombre de usuario
+    tickets_nuevos = Ticket.objects.filter(status__name='Nuevo')
+
     if search_query:
         try:
             ticket_id = ObjectId(search_query)
@@ -206,10 +229,14 @@ def _listmyTickets(request, form):
                 Q(_id__icontains=search_query)
             )
     paginator = Paginator(tickets, 8)
+    num_tickets = tickets.count()
+    num_tickets2 = tickets_nuevos.count()
 
+    print( 'HAY ' + str(num_tickets) + ' TICKETS LEVANTADOS')
+    print( 'HAY ' + str(num_tickets2) + ' TICKETS NUEVOS LEVANTADOS')
     page_number = request.GET.get('page')
     tickets_page = paginator.get_page(page_number)
-
+    
     return render(request, 'ticket/mytickets.html', {'tickets': tickets_page, 'form': form})
 
 @login_required(login_url='login')  # Asegúrate de importar 'login_required' desde 'django.contrib.auth.decorators'
@@ -240,7 +267,7 @@ def _listAssignedTickets(request, form):
 
     page_number = request.GET.get('page')
     tickets_page = paginator.get_page(page_number)
-
+    
     return render(request, 'ticket/index.html', {'tickets': tickets_page, 'form': form})
 
 def _listGlobalTickets(request, form):

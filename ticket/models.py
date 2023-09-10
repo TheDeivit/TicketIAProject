@@ -53,7 +53,7 @@ class Specialty(Base):
 # Create your models here.
 class Ticket(Base):
     content = models.TextField()
-    created_at = models.DateTimeField(default=timezone.now)
+    created_at = models.DateField(default=timezone.now)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     urgency = models.ForeignKey(Urgency, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
