@@ -3,6 +3,10 @@ from django.utils import timezone
 from bson.objectid import ObjectId
 from django.contrib.auth.models import User
 
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+from datetime import timedelta
+
 class Base(models.Model):
     _id = models.ObjectIdField()
     name = models.CharField(max_length=255)
@@ -53,21 +57,31 @@ class Specialty(Base):
 # Create your models here.
 class Ticket(Base):
     content = models.TextField()
-    created_at = models.DateField(default=timezone.now)
+    created_at = models.DateTimeField(default=timezone.now)
     location = models.ForeignKey(Location, on_delete=models.CASCADE)
     urgency = models.ForeignKey(Urgency, on_delete=models.CASCADE)
     status = models.ForeignKey(Status, on_delete=models.CASCADE)
     specialCase = models.ForeignKey(SpecialCase, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
-    deadline = models.DateField()
+    deadline = models.DateTimeField()
     technician = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE, related_name="technician")
     username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
     #evidence = models.FileField(upload_to='evidences/', blank=True, null=True)
+    time_to_solve = models.DurationField(null=True, blank=True)  # Nuevo campo para almacenar el tiempo de resolución
 
     
     class Meta:
         verbose_name_plural = "Tickets"
+
+    def calculate_time_to_solve(self):
+        if self.created_at and self.deadline:
+            delta = (self.deadline) - self.created_at
+            self.time_to_solve = timedelta(days=delta.days)
+
+@receiver(pre_save, sender=Ticket)
+def calculate_time_to_solve(sender, instance, **kwargs):
+    instance.calculate_time_to_solve()
 
 class Profile(Base):
     username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
@@ -77,10 +91,3 @@ class Profile(Base):
     
     class Meta:
         verbose_name_plural = "Perfil de Usuario"
-
-class RelationProfileUser(Base):
-    username = models.ForeignKey(User, blank=True, null=True, on_delete=models.CASCADE)
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
-    
-    class Meta:
-        verbose_name_plural = "Relacion de Perfil y User"

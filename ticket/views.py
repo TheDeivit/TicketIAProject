@@ -42,7 +42,6 @@ def specialtickets(request):
 
 def add(request):
     if request.method == 'POST':
-        
         form = TicketForm(request.POST)#, request.FILES
         if form.is_valid():
             ticket = form.save(commit=False)
@@ -157,17 +156,14 @@ def ticket_details(request, pk):
 @user_passes_test(is_solicitante, login_url='ticket:index')
 def myticket_details(request, pk):
     ticket = Ticket.objects.get(pk=ObjectId(pk))
-    tiempo_para_resolver = ticket.deadline - ticket.created_at
-    tiempo_para_resolver_str = str(tiempo_para_resolver)
 
     context = {
         'ticket': ticket,
-        'tiempo_para_resolver_str': tiempo_para_resolver_str,
     }
     #TEST
     print(ticket.name)
     print(ticket.department)
-    if ticket.department.name == "Logistica":
+    if ticket.location.name == "Home Office":
         if ticket.status.name == 'Nuevo': 
             print('El ticket debe de ir para tecnico1 y es nuevo')
     #TEST END
@@ -182,7 +178,14 @@ def ticket_auto(pk):
 
 def globalticket_details(request, pk):
     ticket = Ticket.objects.get(pk=ObjectId(pk))
-    return render(request, 'ticket/globalticket_details.html', {'ticket': ticket})
+    tiempo_para_resolver = ticket.deadline - ticket.created_at
+    tiempo_para_resolver_str = str(tiempo_para_resolver)
+
+    context = {
+        'ticket': ticket,
+        'tiempo_para_resolver_str': tiempo_para_resolver_str,
+    }
+    return render(request, 'ticket/globalticket_details.html', context)
 
 def specialticket_details(request, pk):
     ticket = Ticket.objects.get(pk=ObjectId(pk))
@@ -211,7 +214,7 @@ def _listmyTickets(request, form):
 
     tickets = Ticket.objects.filter(username=username).order_by('created_at')  # Filtra los tickets por nombre de usuario
     tickets_nuevos = Ticket.objects.filter(status__name='Nuevo')
-
+    
     if search_query:
         try:
             ticket_id = ObjectId(search_query)
