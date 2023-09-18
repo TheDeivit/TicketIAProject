@@ -13,6 +13,13 @@ from django.contrib.auth.models import Group
 
 from django.core.exceptions import ValidationError
 from django.db.models import Q
+import pandas as pd
+from ticket.tree import X  # Importa X desde tree.py
+import pickle
+
+# Cargar el modelo de árbol de decisión desde el archivo
+with open('modelo_arbol.pkl', 'rb') as model_file:
+    clf = pickle.load(model_file)
 
 # Create your views here.
 def is_tecnico(user):
@@ -40,23 +47,49 @@ def globaltickets(request):
 def specialtickets(request):
     return _listSpecialTickets(request, TicketForm())
 
+# views.py
+def asignar_tecnico_predicho(ticket, new_ticket_encoded):
+    # Realiza la lógica para obtener el técnico predicho
+    # y asígnalo al ticket
+    # ... Realiza la predicción utilizando el modelo ...
+
+    # Asigna el técnico predicho al ticket
+    predicted_technician = clf.predict(new_ticket_encoded)
+    ticket.technician_id = predicted_technician[0]
+    ticket.save()
+
+# Definir la función add
 def add(request):
     if request.method == 'POST':
-        form = TicketForm(request.POST)#, request.FILES
+        form = TicketForm(request.POST)
         if form.is_valid():
             ticket = form.save(commit=False)
             ticket.username = request.user
-            technician_id = request.POST.get('technician')  # Obtener el ID del técnico seleccionado
-            ticket.technician_id = technician_id
-            print(technician_id)
-            ticket.save()
+        
+            new_ticket = {
+                'urgency_id': ticket.urgency_id,
+                'location_id': ticket.location_id,
+                'category_id': ticket.category_id,
+            }
+
+            # Crear un DataFrame para el nuevo ticket
+            new_ticket_df = pd.DataFrame([new_ticket])
+
+            # Realizar la codificación one-hot de las columnas categóricas
+            new_ticket_encoded = pd.get_dummies(new_ticket_df, columns=['urgency_id', 'location_id', 'category_id'])
+            new_ticket_encoded = new_ticket_encoded.reindex(columns=X.columns, fill_value=0)
+
+            # Realizar la predicción utilizando el modelo y pasar new_ticket_encoded
+            asignar_tecnico_predicho(ticket, new_ticket_encoded)
+    
+            print("TECNICO CON IA: ")
+            print(ticket.technician_id)
             print("Fue valido")
         else:
             print("No valido")
             return _listTicket(request, form)
         
     return redirect('ticket:create_ticket')
-
 def update(request, pk):
 
     ticket = Ticket.objects.get(pk = ObjectId(pk))
