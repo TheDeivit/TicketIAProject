@@ -59,6 +59,7 @@ def asignar_tecnico_predicho(ticket, new_ticket_encoded):
     ticket.save()
 
 # Definir la función add
+# Definir la función add
 def add(request):
     if request.method == 'POST':
         form = TicketForm(request.POST)
@@ -79,10 +80,26 @@ def add(request):
             new_ticket_encoded = pd.get_dummies(new_ticket_df, columns=['urgency_id', 'location_id', 'category_id'])
             new_ticket_encoded = new_ticket_encoded.reindex(columns=X.columns, fill_value=0)
 
-            # Realizar la predicción utilizando el modelo y pasar new_ticket_encoded
-            asignar_tecnico_predicho(ticket, new_ticket_encoded)
-    
-            print("TECNICO CON IA: ")
+            predicted_probabilities = clf.predict_proba(new_ticket_encoded)
+            top_3_classes = clf.classes_[predicted_probabilities.argsort(axis=1)[:, -3:][:, ::-1]]
+
+            print("Tres técnicos más probables:", top_3_classes)
+
+            # Consultar la carga de tickets actual para los tres mejores técnicos
+            carga_tickets = {}
+            for tecnico_id in top_3_classes[0]:
+                carga_tickets[tecnico_id] = Ticket.objects.filter(technician_id=tecnico_id, status__name='Nuevo').count()
+
+            # Seleccionar al técnico con la menor carga de tickets entre los tres mejores
+            tecnico_asignado_id = min(top_3_classes[0], key=lambda x: carga_tickets[x])
+
+            # Asignar el ticket al técnico seleccionado
+            ticket.technician_id = tecnico_asignado_id
+
+            # Guardar el ticket
+            ticket.save()
+
+            print("TECNICO ASIGNADO CON MENOS CARGA: ")
             print(ticket.technician_id)
             print("Fue valido")
         else:
@@ -90,6 +107,7 @@ def add(request):
             return _listTicket(request, form)
         
     return redirect('ticket:create_ticket')
+
 def update(request, pk):
 
     ticket = Ticket.objects.get(pk = ObjectId(pk))
