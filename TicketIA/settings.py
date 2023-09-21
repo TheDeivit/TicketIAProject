@@ -81,6 +81,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'TicketIA',
+        'HOST': '54.164.147.229',  # Actualiza con la nueva dirección IP
+        'PORT': 8000,   
     }
 }
 
