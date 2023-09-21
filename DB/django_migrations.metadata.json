@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"TicketIA.django_migrations"},{"v":2,"unique":true,"key":{"id":1},"name":"__primary_key__","ns":"TicketIA.django_migrations"}],"uuid":"2c1fcdb54c2f43e9bf058ed03d33de49"}

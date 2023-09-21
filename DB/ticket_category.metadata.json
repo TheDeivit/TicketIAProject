@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"TicketIA.ticket_category"},{"v":2,"key":{"categorytype_id":1},"name":"ticket_category_categorytype_id_ba717fd4","ns":"TicketIA.ticket_category"}],"uuid":"9eae80a6eb6445abb69dc2b35dd1b80a"}

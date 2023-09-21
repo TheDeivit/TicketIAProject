@@ -1,0 +1,1 @@
+{"options":{},"indexes":[{"v":2,"key":{"_id":1},"name":"_id_","ns":"TicketIA.auth_user"},{"v":2,"unique":true,"key":{"id":1},"name":"__primary_key__","ns":"TicketIA.auth_user"},{"v":2,"unique":true,"key":{"username":1},"name":"username_1","ns":"TicketIA.auth_user"}],"uuid":"d1f8ec99f27e408397d208ab3b5cf2f6"}
