@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt  # Importa Matplotlib
 import pickle
 
 # Carga el conjunto de datos desde el archivo CSV
-data = pd.read_csv('ticket/dataset.csv')
+data = pd.read_csv('ticket\dataset.csv')
 
 # Realiza la codificación one-hot de las columnas categóricas
 data_encoded = pd.get_dummies(data, columns=['urgency_id', 'location_id', 'category_id'])
