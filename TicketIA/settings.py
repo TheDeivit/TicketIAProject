@@ -81,6 +81,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'TicketIA',
+        'HOST': '172.31.43.178',
+        'PORT': '8000',
     }
 }
 
