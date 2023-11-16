@@ -25,9 +25,9 @@ clf = DecisionTreeClassifier(max_depth=24, min_samples_split=2, min_samples_leaf
 clf.fit(X_train, y_train)
 
 # Visualiza el árbol de decisión después de entrenar el modelo
-#plt.figure(figsize=(12, 8))
-#plot_tree(clf, filled=True, feature_names=X.columns.tolist(), class_names=[str(c) for c in clf.classes_], rounded=True)
-#plt.show()  # Muestra el árbol
+plt.figure(figsize=(12, 8))
+plot_tree(clf, filled=True, feature_names=X.columns.tolist(), class_names=[str(c) for c in clf.classes_], rounded=True)
+plt.show()  # Muestra el árbol
 
 # Predicción para el nuevo ticket
 new_ticket = {
